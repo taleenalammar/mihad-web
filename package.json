@@ -1,0 +1,9 @@
+{
+  "name": "mihad-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mihad interactive demo \u2014 Naqlthon 5",
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,877 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>مِهاد — مخطِّط رحلاتك الذكي في الرياض</title>
+<meta name="description" content="مِهاد: يخطط رحلتك بالحافلة والمترو والسيارة في الرياض، وينبّهك عند التأخير ويقترح بديلًا أسرع.">
+<meta name="theme-color" content="#1A3D30">
+<link rel="preload" href="assets/Alexandria.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%231A3D30'/%3E%3Ccircle cx='24' cy='20' r='6' fill='%23C9A86C'/%3E%3C/svg%3E">
+<style>
+:root{
+  --green:#1A3D30; --green2:#24503F; --gold:#C9A86C; --gold-d:#9C7A3E; --ivory:#F5F0E6;
+  --beige:#EDE5D3; --beige2:#F0E9DA; --mint:#DCE7DF; --mint-t:#2C5A47; --white:#FFFFFF;
+  --ink:#1B1F1D; --mute:#77786F; --line:#E6DFCF; --red:#C2412D; --red-bg:#F1EEE8;
+  --metro:#7A3FA3; --car:#2F6FE4; --bus:#2E8B57;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+@page{size:560px 1040px;margin:0}
+html,body{width:560px;height:1040px;background:#F3F3F1;font-family:'Alexandria',sans-serif;color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:560px;height:1040px;position:relative;padding-top:34px}
+.label{direction:ltr;text-align:center;font-size:17px;font-weight:bold;color:var(--green);letter-spacing:.2px}
+.label .ar{font-weight:bold}
+.sub-label{direction:rtl;text-align:center;font-size:11px;color:var(--mute);margin-top:6px}
+.phone{position:absolute;left:67px;top:96px;width:426px;height:898px;border-radius:64px;background:#141414;padding:12px;box-shadow:0 30px 60px rgba(0,0,0,.18),inset 0 0 0 2px #3a3a3a}
+.screen{width:402px;height:874px;border-radius:54px;background:var(--ivory);overflow:hidden;position:relative;direction:rtl}
+.island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:124px;height:36px;background:#000;border-radius:20px;z-index:20}
+.status{height:54px;display:flex;align-items:center;justify-content:space-between;padding:6px 34px 0 34px;direction:ltr;font-weight:bold;font-size:16px}
+.status .icons{display:flex;gap:6px;align-items:center}
+.home-ind{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:140px;height:5px;border-radius:3px;background:#111;z-index:30}
+.content{padding:0 20px}
+.row{display:flex;align-items:center}
+.between{justify-content:space-between}
+.gap4{gap:4px}.gap6{gap:6px}.gap8{gap:8px}.gap10{gap:10px}.gap12{gap:12px}
+.card{background:var(--white);border-radius:18px;border:1px solid var(--line)}
+.t-mute{color:var(--mute)}
+.b{font-weight:bold}
+.h1{font-size:22px;font-weight:bold;line-height:1.35}
+.h2{font-size:15px;font-weight:bold}
+.s11{font-size:11px}.s10{font-size:10px}.s12{font-size:12px}.s13{font-size:13px}.s14{font-size:14px}.s9{font-size:9px}
+.chip{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:6px 12px;font-size:11.5px;font-weight:bold;background:var(--white);border:1px solid var(--line);white-space:nowrap}
+.chip.on{background:var(--green);color:#fff;border-color:var(--green)}
+.mode{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:4px 9px;font-size:10.5px;font-weight:bold;background:var(--mint);color:var(--mint-t);white-space:nowrap}
+.mode.metro{background:#EFE4F5;color:var(--metro)}
+.mode.car{background:#E3ECFC;color:#1F57C3}
+.mode.walk{background:#ECEBE4;color:#5C5D55}
+.mode.bus{background:var(--mint);color:var(--mint-t)}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;height:50px;border-radius:16px;background:var(--green);color:#fff;font-weight:bold;font-size:15px}
+.btn.ghost{background:#fff;color:var(--green);border:1.5px solid var(--green)}
+.btn.soft{background:var(--beige2);color:var(--green)}
+.btn.sm{height:40px;border-radius:12px;font-size:12.5px}
+.iconbtn{width:40px;height:40px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.badge{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:3px 9px;font-size:10px;font-weight:bold;background:#F3E8D2;color:var(--gold-d)}
+.badge.red{background:var(--red-bg);color:var(--red)}
+.badge.green{background:var(--mint);color:var(--mint-t)}
+.badge.blue{background:#E3ECFC;color:#1F57C3}
+.divider{height:1px;background:var(--line)}
+.stat{background:var(--beige2);border-radius:12px;padding:9px 6px;text-align:center;flex:1}
+.stat .v{font-weight:bold;font-size:13px}
+.stat .k{font-size:9.5px;color:var(--mute);margin-top:3px}
+.banner{background:var(--mint);border-radius:14px;padding:11px 14px}
+.ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+.dot{width:8px;height:8px;border-radius:50%}
+.tabbar{position:absolute;bottom:0;left:0;right:0;height:84px;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding-top:10px}
+.tab{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;color:var(--mute);width:70px}
+.tab.on{color:var(--green);font-weight:bold}
+
+.lchip{display:inline-flex;align-items:center;gap:5px;border-radius:7px;padding:3px 8px;font-size:10.5px;font-weight:bold;color:#fff;white-space:nowrap}
+.crowd{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:bold;white-space:nowrap}
+.cbar{display:inline-flex;gap:2px}.cbar i{width:5px;height:11px;border-radius:2px;background:#E2DBCB;display:block}
+
+.status{position:relative;z-index:8}
+.t11{font-size:11px}.t12{font-size:12px}.t13{font-size:13px}.t14{font-size:14px}.t15{font-size:15px}
+.hero{background:linear-gradient(140deg,#1A3D30 0%,#22503E 60%,#2E6650 100%);color:#fff;border-radius:24px;padding:16px;position:relative;overflow:hidden;box-shadow:0 14px 30px rgba(26,61,48,.28)}
+.hero:after{content:'';position:absolute;left:-40px;bottom:-60px;width:170px;height:170px;border-radius:50%;background:rgba(201,168,108,.16)}
+.gold{color:#E3C78F}
+.glass{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:14px}
+.sh{background:#fff;border-radius:20px;box-shadow:0 4px 18px rgba(40,40,20,.07);padding:14px}
+.sheet2{position:absolute;left:0;right:0;bottom:0;background:var(--ivory);border-radius:28px 28px 0 0;box-shadow:0 -8px 24px rgba(0,0,0,.08);padding:10px 18px 0;z-index:5}
+.handle{width:42px;height:5px;border-radius:3px;background:#D8D0BF;margin:0 auto 10px}
+.mapwrap{position:absolute;top:0;left:0;right:0;background:#F2EFE8;z-index:1;overflow:hidden}
+.fab{position:absolute;z-index:7;width:42px;height:42px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.12)}
+.pill{position:absolute;z-index:7;background:#fff;border-radius:999px;padding:7px 12px;box-shadow:0 4px 12px rgba(0,0,0,.1);font-size:11.5px;font-weight:bold;display:flex;align-items:center;gap:6px}
+.why2{font-size:11.5px;color:var(--mute);line-height:1.6}
+.seg{display:flex;gap:3px;height:9px}.seg div{border-radius:5px;height:9px}
+.lbl{font-size:11px;color:var(--mute)}
+.ibox{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex:none}
+svg text{font-family:'Alexandria'!important}
+@font-face{font-family:'Alexandria';src:url('assets/Alexandria.ttf') format('truetype');font-weight:100 900;font-display:swap}
+html,body{width:auto;height:auto;min-height:100%;background:#EEEAE1;font-family:'Alexandria',sans-serif}
+body{min-height:100vh;overflow-x:hidden}
+button{font-family:inherit}
+.stage{min-height:100vh;display:flex;align-items:center;justify-content:center;gap:36px;padding:20px;direction:rtl}
+.side{width:260px;align-self:center;background:#fff;border-radius:24px;padding:22px 18px;box-shadow:0 10px 30px rgba(26,61,48,.08);direction:rtl}
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.brand b{font-size:22px;color:#1A3D30}
+.tag{font-size:12px;color:#77786F;line-height:1.7;margin-bottom:14px}
+.navgroup{margin-top:12px}
+.navtitle{font-size:11px;color:#9A9384;margin-bottom:6px;font-weight:600}
+.navbtn{display:flex;align-items:center;gap:10px;width:100%;border:0;background:transparent;padding:8px 10px;border-radius:12px;font-size:13px;color:#1F2A24;cursor:pointer;text-align:right}
+.navbtn:hover{background:#F5F0E6}
+.navbtn.on{background:#1A3D30;color:#fff}
+.navbtn .num{font-size:10.5px;font-weight:700;min-width:30px;padding:2px 0;border-radius:7px;background:#F1EBDD;color:#1A3D30;text-align:center}
+.navbtn.on .num{background:#C9A86C;color:#1A3D30}
+.sidebtns{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.sbtn{border:0;border-radius:14px;height:42px;font-size:13px;font-weight:700;cursor:pointer;background:#F1EBDD;color:#1A3D30}
+.sbtn.dark{background:#1A3D30;color:#fff}
+.note{font-size:10.5px;color:#9A9384;line-height:1.7;margin-top:12px}
+.device{position:relative;flex:none}
+.frame{position:absolute;left:0;top:0;width:402px;height:874px;border-radius:58px;box-shadow:0 0 0 10px #1B1D1C,0 0 0 12px #3A3D3B,0 30px 60px rgba(0,0,0,.25);transform-origin:top center}
+.screen{position:absolute!important;inset:0;transition:opacity .26s ease,transform .32s cubic-bezier(.25,.8,.3,1),visibility 0s linear .32s;opacity:0;pointer-events:none;transform:translateX(-22px);will-change:transform,opacity;visibility:hidden}
+.screen.back{transform:translateX(22px)}
+.screen.active{opacity:1;pointer-events:auto;transform:none;z-index:2;visibility:visible;transition:opacity .26s ease,transform .32s cubic-bezier(.25,.8,.3,1),visibility 0s}
+.screen.exit-fwd,.screen.exit-back{visibility:visible;z-index:1}
+.screen.exit-fwd{transform:translateX(22px)}
+.screen.exit-back{transform:translateX(-22px)}
+.scroll{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+body{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes drop{0%{opacity:0;transform:translateY(-36px) scale(.96)}60%{opacity:1;transform:translateY(4px)}100%{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:none}}
+.pop{animation:pop .32s cubic-bezier(.22,.8,.24,1) both}
+.drop{animation:drop .6s cubic-bezier(.22,.8,.24,1) .35s both}
+.toast{transition:opacity .25s ease,transform .35s cubic-bezier(.22,.8,.24,1)}
+@media (prefers-reduced-motion:reduce){.screen,.toast{transition:none}.pop,.drop{animation:none}}
+.scroll::-webkit-scrollbar{display:none}
+.screen.long .status{position:sticky;top:0;background:var(--ivory)}
+.screen.long .island{position:absolute;z-index:9}
+.screen.long .scroll>.content{padding-bottom:120px}
+.screen.dark .status{color:#fff}.screen.dark .status svg *{fill:#fff;stroke:#fff}
+.click{cursor:pointer;transition:transform .12s ease,filter .12s ease}
+.click:active{transform:scale(.97)}
+.stars span{cursor:pointer;transition:transform .15s}.stars span:active{transform:scale(1.25)}
+.click:hover{filter:brightness(1.04)}
+.simdev{display:none}
+.stage.sim .simdev{display:block}
+.aiinput{flex:1;border:0;outline:0;background:transparent;font-family:inherit;font-size:13px;color:var(--ink);padding:0 8px;height:36px;direction:rtl;min-width:0}
+.aiinput::placeholder{color:#9A9384}
+.chatinput{flex:1;border:0;outline:0;background:transparent;font-family:inherit;font-size:13px;color:var(--ink);height:48px;direction:rtl;min-width:0}
+.typing span{width:7px;height:7px;border-radius:50%;background:#1A3D30;display:inline-block;margin-left:4px;animation:blink 1s infinite}
+.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,100%{opacity:.2}50%{opacity:1}}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:#1A3D30;color:#fff;padding:12px 18px;border-radius:14px;font-size:13px;opacity:0;transition:.25s;z-index:100;direction:rtl;max-width:90vw;text-align:center;box-shadow:0 10px 24px rgba(0,0,0,.2)}
+.toast.show{opacity:1;transform:translateX(-50%)}
+.side{display:none;position:fixed;left:20px;bottom:76px;z-index:60;max-height:calc(100vh - 110px);overflow:auto;box-shadow:0 18px 50px rgba(26,61,48,.18)}
+.side.open{display:block;animation:pop .25s cubic-bezier(.22,.8,.24,1) both}
+.menubtn{display:flex;position:fixed;left:20px;bottom:20px;z-index:70;width:42px;height:42px;border-radius:50%;border:0;background:#1A3D30;color:#fff;align-items:center;justify-content:center;font-size:18px;cursor:pointer;opacity:.28;transition:opacity .2s}
+.menubtn:hover,.menubtn.on{opacity:1}
+.selected-opt{background:#FBF6EC!important;border:1.5px solid #C9A86C!important}
+.mic-on{box-shadow:0 0 0 3px rgba(201,168,108,.7)}
+@media (max-width:760px){
+  .stage{padding:0;gap:0;display:block}
+  .side{inset:auto 10px 10px 10px;left:10px;bottom:10px;max-height:80vh;width:auto}
+  .device{width:100vw;height:100dvh;overflow:hidden}
+  .frame{border-radius:0;box-shadow:none}
+  .screen{border-radius:0!important}
+  .screen .status,.screen .island{visibility:hidden}
+  .menubtn{top:10px;bottom:auto;left:12px;width:34px;height:34px;opacity:.35}
+  .stage.sim .simdev{position:fixed;inset:0;z-index:50;background:#EEEAE1;overflow:auto}
+  .stage.sim .device:not(.simdev){display:none}
+}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="device main"><div class="frame" id="phone"><section class="screen" data-id="01" aria-label="الرئيسية"><div class="scroll"><div class="island"></div><div class="status"><span>9:41</span><span class="icons">
+<svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#111"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="#111"/><rect x="10" y="3" width="3" height="9" rx="1" fill="#111"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#111"/></svg>
+<svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.5 5.6 8.6a3.6 3.6 0 0 1 4.8 0z" fill="#111"/><path d="M3.4 6.4a6.8 6.8 0 0 1 9.2 0" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M1 3.8a10.6 10.6 0 0 1 14 0" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+<svg width="26" height="12" viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" opacity=".45"/><rect x="2.2" y="2.2" width="18.6" height="7.6" rx="2" fill="#111"/><rect x="23.8" y="4" width="1.8" height="4" rx=".8" fill="#111" opacity=".45"/></svg>
+</span></div><div class="content" style="padding-top:4px">
+  <div class="row between"><div class="row gap10"><svg width="40" height="40" viewBox="0 0 48 48" style="flex:none">
+<rect width="48" height="48" rx="12" fill="#1A3D30"/>
+<path d="M12 36V24a6 6 0 0 1 12 0v12M24 24a6 6 0 0 1 12 0v12" fill="none" stroke="#F5F0E6" stroke-width="4.2" stroke-linecap="round"/>
+<path d="M24 23.5s-4.6-4.2-4.6-7.8a4.6 4.6 0 0 1 9.2 0c0 3.6-4.6 7.8-4.6 7.8z" fill="#C9A86C"/>
+<circle cx="24" cy="15.6" r="1.7" fill="#1A3D30"/></svg><div class="b" style="font-size:17px">مِهاد</div></div><div class="iconbtn" style="box-shadow:0 2px 8px rgba(0,0,0,.06)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg></div></div>
+  <div style="margin-top:16px"><div class="t13 t-mute">صباح الخير</div><div class="b" style="font-size:25px;margin-top:2px">إلى أين تتجه اليوم؟</div></div>
+  <div class="hero" style="margin-top:14px;padding:14px">
+    <div class="row gap8" style="position:relative;z-index:1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E3C78F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg><span class="t13 b">اسأل مِهاد</span><span class="t11" style="opacity:.6;margin-right:auto">مساعد بالذكاء الاصطناعي</span></div>
+    <div class="row gap8" style="margin-top:10px;background:#fff;border-radius:16px;padding:6px 6px 6px 8px;position:relative;z-index:1">
+      <div style="flex:1;padding:0 8px" class="t13 t-mute">أريد الوصول إلى الجامعة قبل الثامنة…</div>
+      <div class="ibox" style="width:36px;height:36px;border-radius:50%;background:var(--beige2)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A3D30" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0"/><path d="M12 17.5V21"/></svg></div>
+      <div class="ibox" style="width:36px;height:36px;border-radius:50%;background:var(--green)"><span style="display:flex;transform:scaleX(-1)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M20 4 3.5 11l6.5 2.5L12.5 20z"/><path d="M10 13.5 20 4"/></svg></span></div>
+    </div>
+    <div class="t11" style="opacity:.65;margin-top:10px;position:relative;z-index:1">اقتراحات ذكية لك</div>
+    <div class="row gap6" style="margin-top:6px;flex-wrap:wrap;position:relative;z-index:1"><span style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:6px 10px;white-space:nowrap" class="t11 b row gap4"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E3C78F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg> رحلتك المعتادة: الجامعة 07:00</span><span style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:6px 10px;white-space:nowrap" class="t11 b row gap4"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E3C78F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1-3.6 4-5.5 7-5.5s6 1.9 7 5.5"/></svg> تجنّب الزحام</span></div>
+  </div>
+  <div class="row gap10" style="margin:14px 0 10px"><div class="divider" style="flex:1"></div><span class="t11 t-mute">أو حدّد رحلتك يدويًا</span><div class="divider" style="flex:1"></div></div>
+  <div class="sh" style="padding:4px 14px;border-radius:20px">
+    <div class="row gap12" style="padding:10px 0"><div style="width:11px;height:11px;border-radius:50%;border:3px solid #1A3D30;margin:0 5px"></div><div style="flex:1"><div class="t11 t-mute">من</div><div class="b t14">موقعي الحالي</div></div><div class="ibox" style="width:30px;height:30px;border-radius:50%;background:var(--beige2)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1A3D30" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M8 4v16"/><path d="M4.5 7.5 8 4l3.5 3.5"/><path d="M16 20V4"/><path d="M12.5 16.5 16 20l3.5-3.5"/></svg></div></div>
+    <div class="divider"></div>
+    <div class="row gap12" style="padding:10px 0"><div style="width:13px;height:13px;border-radius:4px;background:#C9A86C;margin:0 4px"></div><div style="flex:1"><div class="t11 t-mute">إلى</div><div class="t14 t-mute">ابحث عن وجهتك</div></div></div>
+  </div>
+  <div class="row" style="margin-top:14px"><div style="flex:1;text-align:center"><div style="width:50px;height:50px;border-radius:16px;margin:0 auto;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.06);display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A3D30" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M4 11 12 4l8 7"/><path d="M6 10v10h12V10"/></svg></div><div class="t11 b" style="margin-top:6px">المنزل</div></div><div style="flex:1;text-align:center"><div style="width:50px;height:50px;border-radius:16px;margin:0 auto;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.06);display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A3D30" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M2.5 9.5 12 5l9.5 4.5L12 14z"/><path d="M6.5 11.5v4c3 2.5 8 2.5 11 0v-4"/></svg></div><div class="t11 b" style="margin-top:6px">الجامعة</div></div><div style="flex:1;text-align:center"><div style="width:50px;height:50px;border-radius:16px;margin:0 auto;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.06);display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A3D30" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="3.5" y="7.5" width="17" height="12" rx="2"/><path d="M9 7.5V5h6v2.5"/><path d="M3.5 12.5h17"/></svg></div><div class="t11 b" style="margin-top:6px">العمل</div></div><div style="flex:1;text-align:center"><div style="width:50px;height:50px;border-radius:16px;margin:0 auto;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.06);display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A3D30" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M12 5v14M5 12h14"/></svg></div><div class="t11 b" style="margin-top:6px">إضافة</div></div></div>
+</div><div class="tabbar" style="z-index:9;border-radius:22px 22px 0 0;box-shadow:0 -4px 16px rgba(0,0,0,.05);border-top:none"><div class="tab on"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M4 11 12 4l8 7"/><path d="M6 10v10h12V10"/></svg>الرئيسية</div><div class="tab"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r=".8"/><circle cx="4.5" cy="12" r=".8"/><circle cx="4.5" cy="18" r=".8"/></svg>رحلاتي</div><div class="tab"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>المساعد</div><div class="tab"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1-3.6 4-5.5 7-5.5s6 1.9 7 5.5"/></svg>حسابي</div></div></div><div class="home-ind"></div></section><section class="screen long" data-id="02a" aria-label="مِهاد يفكّر"><div class="scroll"><div class="island"></div><div class="status"><span>9:41</span><span class="icons">
+<svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#111"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="#111"/><rect x="10" y="3" width="3" height="9" rx="1" fill="#111"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#111"/></svg>
+<svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.5 5.6 8.6a3.6 3.6 0 0 1 4.8 0z" fill="#111"/><path d="M3.4 6.4a6.8 6.8 0 0 1 9.2 0" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M1 3.8a10.6 10.6 0 0 1 14 0" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+<svg width="26" height="12" viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" opacity=".45"/><rect x="2.2" y="2.2" width="18.6" height="7.6" rx="2" fill="#111"/><rect x="23.8" y="4" width="1.8" height="4" rx=".8" fill="#111" opacity=".45"/></svg>
+</span></div><div class="row between" style="padding:4px 20px 12px"><div class="row gap12"><div class="iconbtn" style="box-shadow:0 2px 8px rgba(0,0,0,.08)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M9.5 6l6 6-6 6"/></svg></div><div><div class="h1" style="font-size:21px">اسأل مِهاد</div><div class="t12 t-mute" style="margin-top:3px">مساعد بالذكاء الاصطناعي</div></div></div><span class="badge"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg> ذكاء اصطناعي</span></div>
+<div class="content">
+  <div class="t11 t-mute" style="text-align:center">اليوم <span class="ltr">06:58</span> ص</div>
+  <div style="display:flex;justify-content:flex-start;margin-top:10px"><div style="max-width:80%;background:linear-gradient(135deg,#1A3D30,#2B5A47);color:#fff;border-radius:20px 20px 6px 20px;padding:11px 15px;line-height:1.6" class="t13">أريد الوصول إلى الجامعة قبل الثامنة، دون زحام</div></div>
+  <div style="display:flex;justify-content:flex-end;align-items:flex-end;gap:8px;margin-top:10px"><div style="max-width:88%;background:#fff;box-shadow:0 3px 14px rgba(0,0,0,.06);border-radius:20px 20px 20px 6px;padding:12px 14px;line-height:1.7" class="t13"><div class="row gap10"><span class="row" style="gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:#1A3D30;opacity:1;display:inline-block"></span><span style="width:8px;height:8px;border-radius:50%;background:#1A3D30;opacity:0.55;display:inline-block"></span><span style="width:8px;height:8px;border-radius:50%;background:#1A3D30;opacity:0.25;display:inline-block"></span></span><b class="t13">مِهاد يفكّر…</b></div><div class="row gap6" style="margin-top:7px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2E8B57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="t12 t-mute">فهمت طلبك: الجامعة قبل الثامنة، دون زحام</span></div><div class="row gap6" style="margin-top:7px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2E8B57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="t12 t-mute">فحصتُ ازدحام المسارات الآن</span></div><div class="row gap6" style="margin-top:7px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C9A86C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg><span class="t12 b">أقارن الوقت والتكلفة بين الطرق…</span></div></div><div style="flex:none"><svg width="28" height="28" viewBox="0 0 48 48" style="flex:none">
+<rect width="48" height="48" rx="12" fill="#1A3D30"/>
+<path d="M12 36V24a6 6 0 0 1 12 0v12M24 24a6 6 0 0 1 12 0v12" fill="none" stroke="#F5F0E6" stroke-width="4.2" stroke-linecap="round"/>
+<path d="M24 23.5s-4.6-4.2-4.6-7.8a4.6 4.6 0 0 1 9.2 0c0 3.6-4.6 7.8-4.6 7.8z" fill="#C9A86C"/>
+<circle cx="24" cy="15.6" r="1.7" fill="#1A3D30"/></svg></div></div>
+</div>
+<div style="position:absolute;bottom:0;left:0;right:0;background:var(--ivory);padding:10px 16px 28px;border-top:1px solid var(--line);z-index:9"><div class="row gap8"><div class="row" style="flex:1;height:48px;border-radius:24px;padding:0 16px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.05)"><span class="t13 t-mute">اكتب رحلتك…</span></div><div style="width:48px;height:48px;border-radius:50%;background:var(--beige2);display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A3D30" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0"/><path d="M12 17.5V21"/></svg></div><div style="width:48px;height:48px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center"><span style="display:flex;transform:scaleX(-1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M20 4 3.5 11l6.5 2.5L12.5 20z"/><path d="M10 13.5 20 4"/></svg></span></div></div></div></div><div class="home-ind"></div></section><section class="screen long" data-id="02" aria-label="اسأل مِهاد"><div class="scroll"><div class="island"></div><div class="status"><span>9:41</span><span class="icons">
+<svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#111"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="#111"/><rect x="10" y="3" width="3" height="9" rx="1" fill="#111"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#111"/></svg>
+<svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.5 5.6 8.6a3.6 3.6 0 0 1 4.8 0z" fill="#111"/><path d="M3.4 6.4a6.8 6.8 0 0 1 9.2 0" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M1 3.8a10.6 10.6 0 0 1 14 0" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+<svg width="26" height="12" viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" opacity=".45"/><rect x="2.2" y="2.2" width="18.6" height="7.6" rx="2" fill="#111"/><rect x="23.8" y="4" width="1.8" height="4" rx=".8" fill="#111" opacity=".45"/></svg>
+</span></div><div class="row between" style="padding:4px 20px 12px"><div class="row gap12"><div class="iconbtn" style="box-shadow:0 2px 8px rgba(0,0,0,.08)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M9.5 6l6 6-6 6"/></svg></div><div><div class="h1" style="font-size:21px">اسأل مِهاد</div><div class="t12 t-mute" style="margin-top:3px">مساعد بالذكاء الاصطناعي</div></div></div><span class="badge"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg> ذكاء اصطناعي</span></div>
+<div class="content">
+  <div class="t11 t-mute" style="text-align:center">اليوم <span class="ltr">06:58</span> ص</div>
+  <div style="display:flex;justify-content:flex-start;margin-top:10px"><div style="max-width:80%;background:linear-gradient(135deg,#1A3D30,#2B5A47);color:#fff;border-radius:20px 20px 6px 20px;padding:11px 15px;line-height:1.6" class="t13">أريد الوصول إلى الجامعة قبل الثامنة، دون زحام</div></div>
+  <div style="display:flex;justify-content:flex-end;align-items:flex-end;gap:8px;margin-top:10px"><div style="max-width:88%;background:#fff;box-shadow:0 3px 14px rgba(0,0,0,.06);border-radius:20px 20px 20px 6px;padding:12px 14px;line-height:1.7" class="t13"><div class="t12 t-mute">فهمت طلبك:</div><div class="row gap6" style="margin-top:6px;flex-wrap:wrap"><span class="chip" style="padding:4px 9px;font-size:10.5px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.6"/></svg> من موقعك</span><span class="chip" style="padding:4px 9px;font-size:10.5px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M6 21V4"/><path d="M6 4h11l-2.5 4L17 12H6"/></svg> جامعة الملك سعود</span><span class="chip" style="padding:4px 9px;font-size:10.5px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg> قبل 08:00</span><span class="chip" style="padding:4px 9px;font-size:10.5px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1-3.6 4-5.5 7-5.5s6 1.9 7 5.5"/></svg> أقل ازدحامًا</span></div></div><div style="flex:none"><svg width="28" height="28" viewBox="0 0 48 48" style="flex:none">
+<rect width="48" height="48" rx="12" fill="#1A3D30"/>
+<path d="M12 36V24a6 6 0 0 1 12 0v12M24 24a6 6 0 0 1 12 0v12" fill="none" stroke="#F5F0E6" stroke-width="4.2" stroke-linecap="round"/>
+<path d="M24 23.5s-4.6-4.2-4.6-7.8a4.6 4.6 0 0 1 9.2 0c0 3.6-4.6 7.8-4.6 7.8z" fill="#C9A86C"/>
+<circle cx="24" cy="15.6" r="1.7" fill="#1A3D30"/></svg></div></div>
+  <div style="display:flex;justify-content:flex-end;align-items:flex-end;gap:8px;margin-top:10px"><div style="max-width:88%;background:#fff;box-shadow:0 3px 14px rgba(0,0,0,.06);border-radius:20px 20px 20px 6px;padding:12px 14px;line-height:1.7" class="t13"><div class="b t13">اقترحتُ لك 3 خيارات، اختر ما يناسبك:</div>
+    <div class="row gap10" style="margin-top:8px;background:#FBF6EC;border:1.5px solid #C9A86C;border-radius:14px;padding:9px 10px">
+      <div style="width:18px;height:18px;border-radius:50%;border:2px solid #1A3D30;display:flex;align-items:center;justify-content:center;flex:none"><div style='width:9px;height:9px;border-radius:50%;background:#1A3D30'></div></div>
+      <div style="flex:1"><div class="row gap6"><span class="b" style="font-size:11.5px">حافلة + مترو</span><span class="badge">الأنسب</span></div><div style="margin-top:4px"><span class="lchip" style="background:#0F8A7E"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="5" y="4" width="14" height="13" rx="2.5"/><path d="M5 11h14"/><path d="M8 17v2.5M16 17v2.5"/><circle cx="8.5" cy="14" r=".6"/><circle cx="15.5" cy="14" r=".6"/></svg>9</span> <span class="lchip" style="background:#D7262E"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="6" y="3.5" width="12" height="14" rx="3"/><path d="M6 10h12"/><path d="M9 21l1.5-3.5M15 21l-1.5-3.5"/><circle cx="9.5" cy="14" r=".6"/><circle cx="14.5" cy="14" r=".6"/></svg>مترو · المسار الأحمر</span></div></div>
+      <div style="text-align:left"><div class="b ltr t14" style="color:var(--green)">07:35</div><div class="t11 t-mute">4 ر.س</div></div></div><div class="row gap10" style="margin-top:8px;background:var(--ivory);border:1px solid transparent;border-radius:14px;padding:9px 10px">
+      <div style="width:18px;height:18px;border-radius:50%;border:2px solid #C9C2B2;display:flex;align-items:center;justify-content:center;flex:none"></div>
+      <div style="flex:1"><div class="row gap6"><span class="b" style="font-size:11.5px">سيارة + مترو</span><span class="badge blue">الأسرع</span></div><div style="margin-top:4px"><span class="lchip" style="background:#3D4B57"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M4 16v-3.5L6 7.5h12l2 5V16"/><path d="M3.5 16h17v2.5h-17z"/><circle cx="7.5" cy="16" r="1.6"/><circle cx="16.5" cy="16" r="1.6"/><path d="M4.5 12.5h15"/></svg>سيارة</span> <span class="lchip" style="background:#D7262E"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="6" y="3.5" width="12" height="14" rx="3"/><path d="M6 10h12"/><path d="M9 21l1.5-3.5M15 21l-1.5-3.5"/><circle cx="9.5" cy="14" r=".6"/><circle cx="14.5" cy="14" r=".6"/></svg>مترو · المسار الأحمر</span></div></div>
+      <div style="text-align:left"><div class="b ltr t14" style="color:var(--ink)">07:30</div><div class="t11 t-mute">15 ر.س</div></div></div><div class="row gap10" style="margin-top:8px;background:var(--ivory);border:1px solid transparent;border-radius:14px;padding:9px 10px">
+      <div style="width:18px;height:18px;border-radius:50%;border:2px solid #C9C2B2;display:flex;align-items:center;justify-content:center;flex:none"></div>
+      <div style="flex:1"><div class="row gap6"><span class="b" style="font-size:11.5px">سيارة فقط</span></div><div style="margin-top:4px"><span class="lchip" style="background:#3D4B57"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M4 16v-3.5L6 7.5h12l2 5V16"/><path d="M3.5 16h17v2.5h-17z"/><circle cx="7.5" cy="16" r="1.6"/><circle cx="16.5" cy="16" r="1.6"/><path d="M4.5 12.5h15"/></svg>مباشر</span></div></div>
+      <div style="text-align:left"><div class="b ltr t14" style="color:var(--ink)">07:45</div><div class="t11 t-mute">38 ر.س</div></div></div>
+    <div class="row gap6 t11" style="margin-top:8px;color:var(--mint-t)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2C5A47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5"/><circle cx="12" cy="8" r=".5"/></svg> استبعدتُ المسار الأزرق في المترو لأنه مزدحم الآن</div>
+    <div class="row gap8" style="margin-top:10px"><div class="btn sm" style="flex:1;height:38px;font-size:13px">اعتمد المحدد</div><div class="btn sm soft" style="flex:1;height:38px;font-size:13px">قارن بالتفصيل</div></div></div><div style="flex:none"><svg width="28" height="28" viewBox="0 0 48 48" style="flex:none">
+<rect width="48" height="48" rx="12" fill="#1A3D30"/>
+<path d="M12 36V24a6 6 0 0 1 12 0v12M24 24a6 6 0 0 1 12 0v12" fill="none" stroke="#F5F0E6" stroke-width="4.2" stroke-linecap="round"/>
+<path d="M24 23.5s-4.6-4.2-4.6-7.8a4.6 4.6 0 0 1 9.2 0c0 3.6-4.6 7.8-4.6 7.8z" fill="#C9A86C"/>
+<circle cx="24" cy="15.6" r="1.7" fill="#1A3D30"/></svg></div></div>
+  <div style="display:flex;justify-content:flex-start;margin-top:10px"><div style="max-width:80%;background:linear-gradient(135deg,#1A3D30,#2B5A47);color:#fff;border-radius:20px 20px 6px 20px;padding:11px 15px;line-height:1.6" class="t13">وماذا لو تأخرت الحافلة؟</div></div>
+  <div style="display:flex;justify-content:flex-end;align-items:flex-end;gap:8px;margin-top:10px"><div style="max-width:88%;background:#fff;box-shadow:0 3px 14px rgba(0,0,0,.06);border-radius:20px 20px 20px 6px;padding:12px 14px;line-height:1.7" class="t13">لا تقلق، سأتابع رحلتك لحظيًا، وأنبّهك فور حدوث أي تأخير، وأقترح عليك بديلًا من موقعك.</div><div style="flex:none"><svg width="28" height="28" viewBox="0 0 48 48" style="flex:none">
+<rect width="48" height="48" rx="12" fill="#1A3D30"/>
+<path d="M12 36V24a6 6 0 0 1 12 0v12M24 24a6 6 0 0 1 12 0v12" fill="none" stroke="#F5F0E6" stroke-width="4.2" stroke-linecap="round"/>
+<path d="M24 23.5s-4.6-4.2-4.6-7.8a4.6 4.6 0 0 1 9.2 0c0 3.6-4.6 7.8-4.6 7.8z" fill="#C9A86C"/>
+<circle cx="24" cy="15.6" r="1.7" fill="#1A3D30"/></svg></div></div>
+</div>
+<div style="position:absolute;bottom:0;left:0;right:0;background:var(--ivory);padding:10px 16px 28px;border-top:1px solid var(--line);z-index:9"><div class="row gap8"><div class="row" style="flex:1;height:48px;border-radius:24px;padding:0 16px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.05)"><span class="t13 t-mute">اكتب رحلتك…</span></div><div style="width:48px;height:48px;border-radius:50%;background:var(--beige2);display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A3D30" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0"/><path d="M12 17.5V21"/></svg></div><div style="width:48px;height:48px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center"><span style="display:flex;transform:scaleX(-1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M20 4 3.5 11l6.5 2.5L12.5 20z"/><path d="M10 13.5 20 4"/></svg></span></div></div></div></div><div class="home-ind"></div></section><section class="screen long" data-id="03" aria-label="اختر طريقتك"><div class="scroll"><div class="island"></div><div class="status"><span>9:41</span><span class="icons">
+<svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#111"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="#111"/><rect x="10" y="3" width="3" height="9" rx="1" fill="#111"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#111"/></svg>
+<svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.5 5.6 8.6a3.6 3.6 0 0 1 4.8 0z" fill="#111"/><path d="M3.4 6.4a6.8 6.8 0 0 1 9.2 0" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M1 3.8a10.6 10.6 0 0 1 14 0" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+<svg width="26" height="12" viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" opacity=".45"/><rect x="2.2" y="2.2" width="18.6" height="7.6" rx="2" fill="#111"/><rect x="23.8" y="4" width="1.8" height="4" rx=".8" fill="#111" opacity=".45"/></svg>
+</span></div><div class="row between" style="padding:4px 20px 12px"><div class="row gap12"><div class="iconbtn" style="box-shadow:0 2px 8px rgba(0,0,0,.08)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M9.5 6l6 6-6 6"/></svg></div><div><div class="h1" style="font-size:21px">اختر طريقتك</div><div class="t12 t-mute" style="margin-top:3px">5 اقتراحات · قارن بين الوقت والتكلفة والازدحام</div></div></div></div>
+<div class="content" style="padding-bottom:100px">
+  <div class="sh row gap10" style="padding:10px 14px;border-radius:18px;margin-bottom:10px">
+    <div style="flex:1">
+      <div class="row gap8"><div style="width:10px;height:10px;border-radius:50%;border:2.5px solid #1A3D30"></div><span class="t12 b">موقعي الحالي</span></div>
+      <div style="width:2px;height:8px;background:#DDD5C5;margin:2px 4px"></div>
+      <div class="row gap8"><div style="width:11px;height:11px;border-radius:3px;background:#C9A86C"></div><span class="t12 b">جامعة الملك سعود</span></div>
+    </div>
+    <span class="t11 b" style="background:var(--beige2);border-radius:999px;padding:5px 10px">المغادرة الآن</span>
+    <div class="ibox" style="width:32px;height:32px;border-radius:50%;background:var(--beige2)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1A3D30" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M8 4v16"/><path d="M4.5 7.5 8 4l3.5 3.5"/><path d="M16 20V4"/><path d="M12.5 16.5 16 20l3.5-3.5"/></svg></div>
+  </div>
+  <div class="row gap8" style="margin:-2px 0 10px;background:linear-gradient(90deg,#FBF6EC,#fff);border:1px solid #EADBB9;border-radius:14px;padding:8px 12px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9C7A3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg><span class="t11"><b style="color:var(--gold-d)">توقّع ذكي:</b> سيستمر الازدحام في المسار الأزرق للمترو حتى <span class="ltr">07:40</span></span></div>
+  <div style="margin-top:8px;background:#fff;border-radius:18px;padding:11px 12px;box-shadow:0 3px 12px rgba(0,0,0,.05);border:2px solid #C9A86C">
+  <div class="row gap10">
+    <div style="width:20px;height:20px;border-radius:50%;border:2px solid #1A3D30;display:flex;align-items:center;justify-content:center;flex:none"><div style='width:10px;height:10px;border-radius:50%;background:#1A3D30'></div></div>
+    <div style="width:22px;height:22px;border-radius:7px;background:#1A3D30;color:#fff;font-size:11px;font-weight:bold;display:flex;align-items:center;justify-content:center;flex:none">A</div>
+    <div style="flex:1"><div class="row gap6"><span class="b t13">حافلة + مترو</span><span class="badge">الأنسب</span></div></div>
+  </div>
+  <div class="row between" style="margin-top:8px;padding-right:30px"><div class="row gap6" style=""><span class="lchip" style="background:#8C8C86"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="13" cy="4.5" r="1.8"/><path d="M10 21l2-6 3 3v3"/><path d="M8 11l3-3 3 2 2 3"/><path d="M12 15l-1-6"/></svg>5 د</span><span class="lchip" style="background:#0F8A7E"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="5" y="4" width="14" height="13" rx="2.5"/><path d="M5 11h14"/><path d="M8 17v2.5M16 17v2.5"/><circle cx="8.5" cy="14" r=".6"/><circle cx="15.5" cy="14" r=".6"/></svg>9</span><span class="lchip" style="background:#D7262E"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="6" y="3.5" width="12" height="14" rx="3"/><path d="M6 10h12"/><path d="M9 21l1.5-3.5M15 21l-1.5-3.5"/><circle cx="9.5" cy="14" r=".6"/><circle cx="14.5" cy="14" r=".6"/></svg>مترو · المسار الأحمر</span></div><span class="crowd" style="color:#2E8B57"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#2E8B57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1-3.6 4-5.5 7-5.5s6 1.9 7 5.5"/></svg><span class="cbar"><i style="background:#2E8B57"></i><i style="background:#E2DBCB"></i><i style="background:#E2DBCB"></i><i style="background:#E2DBCB"></i><i style="background:#E2DBCB"></i></span>فارغ</span></div>
+  <div class="row" style="margin-top:8px;gap:6px;padding-right:30px">
+    <div style="flex:1;background:var(--ivory);border-radius:10px;padding:6px 4px;text-align:center"><div class="b t13 ltr" style="color:var(--green)">07:35</div><div class="t11 t-mute">الوصول</div></div><div style="flex:1;background:var(--ivory);border-radius:10px;padding:6px 4px;text-align:center"><div class="b t13 " style="color:var(--ink)">35 د</div><div class="t11 t-mute">المدة</div></div><div style="flex:1;background:var(--ivory);border-radius:10px;padding:6px 4px;text-align:center"><div class="b t13 " style="color:var(--ink)">4 ر.س</div><div class="t11 t-mute">التكلفة</div></div>
+  </div>
+  <div class="why2" style="margin-top:6px;padding-right:30px">المحطة أبعد، لكن المسار شبه فارغ وبلا تحويل.</div>
+</div>
+  <div style="margin-top:8px;background:#fff;border-radius:18px;padding:11px 12px;box-shadow:0 3px 12px rgba(0,0,0,.05);border:2px solid transparent">
+  <div class="row gap10">
+    <div style="width:20px;height:20px;border-radius:50%;border:2px solid #C9C2B2;display:flex;align-items:center;justify-content:center;flex:none"></div>
+    <div style="width:22px;height:22px;border-radius:7px;background:#0B6FC6;color:#fff;font-size:11px;font-weight:bold;display:flex;align-items:center;justify-content:center;flex:none">B</div>
+    <div style="flex:1"><div class="row gap6"><span class="b t13">سيارة + مترو</span><span class="badge blue">الأسرع</span></div></div>
+  </div>
+  <div class="row between" style="margin-top:8px;padding-right:30px"><div class="row gap6" style=""><span class="lchip" style="background:#3D4B57"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M4 16v-3.5L6 7.5h12l2 5V16"/><path d="M3.5 16h17v2.5h-17z"/><circle cx="7.5" cy="16" r="1.6"/><circle cx="16.5" cy="16" r="1.6"/><path d="M4.5 12.5h15"/></svg>سيارة</span><span class="lchip" style="background:#D7262E"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="6" y="3.5" width="12" height="14" rx="3"/><path d="M6 10h12"/><path d="M9 21l1.5-3.5M15 21l-1.5-3.5"/><circle cx="9.5" cy="14" r=".6"/><circle cx="14.5" cy="14" r=".6"/></svg>مترو · المسار الأحمر</span></div><span class="crowd" style="color:#2E8B57"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#2E8B57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1-3.6 4-5.5 7-5.5s6 1.9 7 5.5"/></svg><span class="cbar"><i style="background:#2E8B57"></i><i style="background:#E2DBCB"></i><i style="background:#E2DBCB"></i><i style="background:#E2DBCB"></i><i style="background:#E2DBCB"></i></span>فارغ</span></div>
+  <div class="row" style="margin-top:8px;gap:6px;padding-right:30px">
+    <div style="flex:1;background:var(--ivory);border-radius:10px;padding:6px 4px;text-align:center"><div class="b t13 ltr" style="color:var(--ink)">07:30</div><div class="t11 t-mute">الوصول</div></div><div style="flex:1;background:var(--ivory);border-radius:10px;padding:6px 4px;text-align:center"><div class="b t13 " style="color:var(--ink)">30 د</div><div class="t11 t-mute">المدة</div></div><div style="flex:1;background:var(--ivory);border-radius:10px;padding:6px 4px;text-align:center"><div class="b t13 " style="color:var(--ink)">15 ر.س</div><div class="t11 t-mute">التكلفة</div></div>
+  </div>
+  
+</div>
+  <div style="margin-top:8px;background:#fff;border-radius:18px;padding:11px 12px;box-shadow:0 3px 12px rgba(0,0,0,.05);border:2px solid transparent">
+  <div class="row gap10">
+    <div style="width:20px;height:20px;border-radius:50%;border:2px solid #C9C2B2;display:flex;align-items:center;justify-content:center;flex:none"></div>
+    <div style="width:22px;height:22px;border-radius:7px;background:#C2412D;color:#fff;font-size:11px;font-weight:bold;display:flex;align-items:center;justify-content:center;flex:none">C</div>
+    <div style="flex:1"><div class="row gap6"><span class="b t13">أقرب محطة مترو</span><span class="badge red">مزدحم</span></div></div>
+  </div>
+  <div class="row between" style="margin-top:8px;padding-right:30px"><div class="row gap6" style="flex-wrap:wrap"><span class="lchip" style="background:#0B6FC6"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="6" y="3.5" width="12" height="14" rx="3"/><path d="M6 10h12"/><path d="M9 21l1.5-3.5M15 21l-1.5-3.5"/><circle cx="9.5" cy="14" r=".6"/><circle cx="14.5" cy="14" r=".6"/></svg>مترو · المسار الأزرق</span><span class="lchip" style="background:#D7262E"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="6" y="3.5" width="12" height="14" rx="3"/><path d="M6 10h12"/><path d="M9 21l1.5-3.5M15 21l-1.5-3.5"/><circle cx="9.5" cy="14" r=".6"/><circle cx="14.5" cy="14" r=".6"/></svg>مترو · المسار الأحمر</span></div><span class="crowd" style="color:#C2412D"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#C2412D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1-3.6 4-5.5 7-5.5s6 1.9 7 5.5"/></svg><span class="cbar"><i style="background:#C2412D"></i><i style="background:#C2412D"></i><i style="background:#C2412D"></i><i style="background:#C2412D"></i><i style="background:#C2412D"></i></span>مزدحم جدًا</span></div>
+  <div class="row" style="margin-top:8px;gap:6px;padding-right:30px">
+    <div style="flex:1;background:var(--ivory);border-radius:10px;padding:6px 4px;text-align:center"><div class="b t13 ltr" style="color:var(--ink)">07:43</div><div class="t11 t-mute">الوصول</div></div><div style="flex:1;background:var(--ivory);border-radius:10px;padding:6px 4px;text-align:center"><div class="b t13 " style="color:var(--ink)">43 د</div><div class="t11 t-mute">المدة</div></div><div style="flex:1;background:var(--ivory);border-radius:10px;padding:6px 4px;text-align:center"><div class="b t13 " style="color:var(--ink)">4 ر.س</div><div class="t11 t-mute">التكلفة</div></div>
+  </div>
+  <div class="why2" style="margin-top:6px;padding-right:30px"><b style="color:#C2412D">لماذا لا نوصي به؟</b> أقرب، لكن المسار الأزرق مزدحم وفيه تحويل، فتصل متأخرًا 8 دقائق.<div class="t12 b" style="margin-top:7px;color:#1A3D30">اعرف السبب بالتفصيل ←</div></div>
+</div>
+  <div style="margin-top:8px;background:#fff;border-radius:18px;padding:11px 12px;box-shadow:0 3px 12px rgba(0,0,0,.05);border:2px solid transparent">
+  <div class="row gap10">
+    <div style="width:20px;height:20px;border-radius:50%;border:2px solid #C9C2B2;display:flex;align-items:center;justify-content:center;flex:none"></div>
+    <div style="width:22px;height:22px;border-radius:7px;background:#0F8A7E;color:#fff;font-size:11px;font-weight:bold;display:flex;align-items:center;justify-content:center;flex:none">E</div>
+    <div style="flex:1"><div class="row gap6"><span class="b t13">حافلة فقط</span><span class="badge green">بلا مترو</span></div></div>
+  </div>
+  <div class="row between" style="margin-top:8px;padding-right:30px"><div class="row gap6" style=""><span class="lchip" style="background:#0F8A7E"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="5" y="4" width="14" height="13" rx="2.5"/><path d="M5 11h14"/><path d="M8 17v2.5M16 17v2.5"/><circle cx="8.5" cy="14" r=".6"/><circle cx="15.5" cy="14" r=".6"/></svg>خط 7</span><span class="lchip" style="background:#0F8A7E"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="5" y="4" width="14" height="13" rx="2.5"/><path d="M5 11h14"/><path d="M8 17v2.5M16 17v2.5"/><circle cx="8.5" cy="14" r=".6"/><circle cx="15.5" cy="14" r=".6"/></svg>خط 12</span></div><span class="crowd" style="color:#C9A86C"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#C9A86C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1-3.6 4-5.5 7-5.5s6 1.9 7 5.5"/></svg><span class="cbar"><i style="background:#C9A86C"></i><i style="background:#C9A86C"></i><i style="background:#C9A86C"></i><i style="background:#E2DBCB"></i><i style="background:#E2DBCB"></i></span>متوسط</span></div>
+  <div class="row" style="margin-top:8px;gap:6px;padding-right:30px">
+    <div style="flex:1;background:var(--ivory);border-radius:10px;padding:6px 4px;text-align:center"><div class="b t13 ltr" style="color:var(--ink)">07:58</div><div class="t11 t-mute">الوصول</div></div><div style="flex:1;background:var(--ivory);border-radius:10px;padding:6px 4px;text-align:center"><div class="b t13 " style="color:var(--ink)">58 د</div><div class="t11 t-mute">المدة</div></div><div style="flex:1;background:var(--ivory);border-radius:10px;padding:6px 4px;text-align:center"><div class="b t13 " style="color:var(--ink)">4 ر.س</div><div class="t11 t-mute">التكلفة</div></div>
+  </div>
+  <div class="why2" style="margin-top:6px;padding-right:30px">الأرخص مع الخيار A ولا يحتاج إلى المترو، لكن الحافلة تتوقف في مواقف كثيرة وتتأخر في زحام طريق العليا.</div>
+</div><div style="margin-top:8px;background:#fff;border-radius:18px;padding:11px 12px;box-shadow:0 3px 12px rgba(0,0,0,.05);border:2px solid transparent">
+  <div class="row gap10">
+    <div style="width:20px;height:20px;border-radius:50%;border:2px solid #C9C2B2;display:flex;align-items:center;justify-content:center;flex:none"></div>
+    <div style="width:22px;height:22px;border-radius:7px;background:#3D4B57;color:#fff;font-size:11px;font-weight:bold;display:flex;align-items:center;justify-content:center;flex:none">D</div>
+    <div style="flex:1"><div class="row gap6"><span class="b t13">سيارة فقط</span></div></div>
+  </div>
+  <div class="row between" style="margin-top:8px;padding-right:30px"><div class="row gap6" style=""><span class="lchip" style="background:#3D4B57"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M4 16v-3.5L6 7.5h12l2 5V16"/><path d="M3.5 16h17v2.5h-17z"/><circle cx="7.5" cy="16" r="1.6"/><circle cx="16.5" cy="16" r="1.6"/><path d="M4.5 12.5h15"/></svg>مباشر</span></div></div>
+  <div class="row" style="margin-top:8px;gap:6px;padding-right:30px">
+    <div style="flex:1;background:var(--ivory);border-radius:10px;padding:6px 4px;text-align:center"><div class="b t13 ltr" style="color:var(--ink)">07:45</div><div class="t11 t-mute">الوصول</div></div><div style="flex:1;background:var(--ivory);border-radius:10px;padding:6px 4px;text-align:center"><div class="b t13 " style="color:var(--ink)">45 د</div><div class="t11 t-mute">المدة</div></div><div style="flex:1;background:var(--ivory);border-radius:10px;padding:6px 4px;text-align:center"><div class="b t13 " style="color:var(--ink)">38 ر.س</div><div class="t11 t-mute">التكلفة</div></div>
+  </div>
+  
+</div>
+</div>
+<div style="position:absolute;bottom:0;left:0;right:0;padding:12px 18px 28px;background:linear-gradient(rgba(245,240,230,0),var(--ivory) 25%);z-index:9"><div class="row gap8"><div style="flex:1"><div class="btn " style="height:52px;font-size:15.5px;border-radius:16px;;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M14.5 6l-6 6 6 6"/></svg>تابع بالخيار A</div></div></div></div></div><div class="home-ind"></div></section><section class="screen long" data-id="04" aria-label="لماذا لا نوصي بـ C؟"><div class="scroll"><div class="island"></div><div class="status"><span>9:41</span><span class="icons">
+<svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#111"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="#111"/><rect x="10" y="3" width="3" height="9" rx="1" fill="#111"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#111"/></svg>
+<svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.5 5.6 8.6a3.6 3.6 0 0 1 4.8 0z" fill="#111"/><path d="M3.4 6.4a6.8 6.8 0 0 1 9.2 0" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M1 3.8a10.6 10.6 0 0 1 14 0" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+<svg width="26" height="12" viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" opacity=".45"/><rect x="2.2" y="2.2" width="18.6" height="7.6" rx="2" fill="#111"/><rect x="23.8" y="4" width="1.8" height="4" rx=".8" fill="#111" opacity=".45"/></svg>
+</span></div><div class="row between" style="padding:4px 20px 12px"><div class="row gap12"><div class="iconbtn" style="box-shadow:0 2px 8px rgba(0,0,0,.08)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M9.5 6l6 6-6 6"/></svg></div><div><div class="h1" style="font-size:21px">لماذا لا نوصي بالخيار C؟</div><div class="t12 t-mute" style="margin-top:3px">قارنّا الخيار C بالخيار A الموصى به</div></div></div></div>
+<div class="content" style="padding-bottom:110px"><div class="hero" style="margin-top:0;margin-bottom:10px;padding:12px 14px"><div class="row gap10" style="position:relative;z-index:1"><div class="ibox" style="width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.15)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#E3C78F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><div class="b t14">الخيار A يوصلك أبكر بـ 8 دقائق</div><div class="t11" style="opacity:.75;margin-top:2px">لأنه بلا ازدحام ولا تحويل، وبنفس التكلفة</div></div></div></div>
+<div class="row gap6" style="margin-top:9px;background:var(--neutralBg,#F1EEE8);border-radius:12px;padding:8px 12px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#77786F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5"/><circle cx="12" cy="8" r=".5"/></svg><span class="t11 t-mute">بيانات الازدحام محاكاة حاليًا، ومستقبلًا من بيانات المشغّل.</span></div>
+  <svg width="362" height="150" viewBox="0 0 360 180" preserveAspectRatio="xMidYMid meet" style="display:block;border-radius:16px;direction:ltr"><rect width="360" height="180" fill="#F2EFE8"/><path d="M0 150 C40 146 70 160 90 180 H0z" fill="#D6EBD3"/><rect x="9" y="9" width="58" height="28" rx="4" fill="#E4E0D7"/><rect x="9" y="55" width="58" height="40" rx="4" fill="#E4E0D7"/><rect x="87" y="9" width="60" height="28" rx="4" fill="#E4E0D7"/><rect x="87" y="55" width="60" height="40" rx="4" fill="#E4E0D7"/><rect x="87" y="125" width="60" height="22" rx="4" fill="#E4E0D7"/><rect x="167" y="9" width="56" height="28" rx="4" fill="#E4E0D7"/><rect x="167" y="55" width="56" height="40" rx="4" fill="#E4E0D7"/><rect x="167" y="125" width="56" height="22" rx="4" fill="#E4E0D7"/><rect x="167" y="163" width="56" height="10" rx="4" fill="#E4E0D7"/><rect x="253" y="9" width="44" height="28" rx="4" fill="#E4E0D7"/><rect x="253" y="55" width="44" height="40" rx="4" fill="#E4E0D7"/><rect x="253" y="125" width="44" height="22" rx="4" fill="#E4E0D7"/><rect x="253" y="163" width="44" height="10" rx="4" fill="#E4E0D7"/><rect x="317" y="9" width="36" height="28" rx="4" fill="#E4E0D7"/><rect x="317" y="55" width="36" height="40" rx="4" fill="#E4E0D7"/><rect x="317" y="125" width="36" height="22" rx="4" fill="#E4E0D7"/><rect x="317" y="163" width="36" height="10" rx="4" fill="#E4E0D7"/><rect x="74" y="0" width="6" height="180" fill="#fff"/><rect x="154" y="0" width="6" height="180" fill="#fff"/><rect x="304" y="0" width="6" height="180" fill="#fff"/><rect x="0" y="43" width="360" height="6" fill="#fff"/><rect x="0" y="152" width="360" height="6" fill="#fff"/><rect x="0" y="104" width="360" height="12" fill="#F6D98A"/><rect x="232" y="0" width="12" height="180" fill="#F6D98A"/><text x="300" y="126" font-size="6" fill="#6d6a60" text-anchor="middle" font-family="DejaVu Sans">طريق الملك عبدالله</text><text transform="translate(252 160) rotate(90)" font-size="6" fill="#6d6a60" text-anchor="middle" font-family="DejaVu Sans">طريق العليا</text><path d="M238 0 V110" stroke="#0B6FC6" stroke-width="6" opacity="1" stroke-linecap="round"/><path d="M40 110 H238" stroke="#D7262E" stroke-width="6" opacity="1" stroke-linecap="round"/><path d="M238 110 H360" stroke="#D7262E" stroke-width="4" opacity=".3"/><circle cx="40" cy="110" r="4.2" fill="#fff" stroke="#D7262E" stroke-width="2.4" opacity="1"/><circle cx="92" cy="110" r="4.2" fill="#fff" stroke="#D7262E" stroke-width="2.4" opacity="1"/><circle cx="144" cy="110" r="4.2" fill="#fff" stroke="#D7262E" stroke-width="2.4" opacity="1"/><circle cx="196" cy="110" r="4.2" fill="#fff" stroke="#D7262E" stroke-width="2.4" opacity="1"/><text x="92" y="100" font-size="5.6" fill="#D7262E" text-anchor="middle" font-family="DejaVu Sans" opacity="1">واحة الملك سلمان</text><text x="144" y="100" font-size="5.6" fill="#D7262E" text-anchor="middle" font-family="DejaVu Sans" opacity="1">KACST</text><text x="196" y="100" font-size="5.6" fill="#D7262E" text-anchor="middle" font-family="DejaVu Sans" opacity="1">التخصصي</text><circle cx="238" cy="30" r="4.2" fill="#fff" stroke="#0B6FC6" stroke-width="2.4" opacity="1"/><text x="230" y="24" font-size="5.6" fill="#0B6FC6" text-anchor="end" font-family="DejaVu Sans" opacity="1">أقرب محطة</text><circle cx="238" cy="110" r="6.5" fill="#fff" stroke="#222" stroke-width="2.4"/><text x="246" y="99" font-size="5.8" fill="#222" font-weight="bold" font-family="DejaVu Sans">STC</text><path d="M318 24 L300 46" stroke="#8C8C86" stroke-width="3.2" stroke-dasharray="1 5" stroke-linecap="round" fill="none"/><path d="M300 46 C290 70 250 96 196 110" stroke="#0F8A7E" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M40 110 L36 140" stroke="#8C8C86" stroke-width="3.2" stroke-dasharray="1 5" stroke-linecap="round" fill="none"/><g transform="translate(293 39)"><rect width="14" height="14" rx="4" fill="#0F8A7E" stroke="#fff" stroke-width="1.8"/><g transform="translate(2 2) scale(.42)" stroke="#fff" stroke-width="3" fill="none"><rect x="5" y="4" width="14" height="13" rx="2.5"/><path d="M5 11h14"/></g></g><circle cx="318" cy="24" r="5" fill="#fff" stroke="#333" stroke-width="2.4"/><text x="320" y="16" font-size="6.5" fill="#333" text-anchor="end" font-family="DejaVu Sans">حي النرجس</text><g transform="translate(28 119)"><path d="M8 21s-7-6.6-7-11.6a7 7 0 0 1 14 0C15 14.4 8 21 8 21z" fill="#D93A2B"/><circle cx="8" cy="9.2" r="2.6" fill="#7d1a12"/></g><text x="46" y="142" font-size="6.5" fill="#C2412D" font-weight="bold" font-family="DejaVu Sans">الجامعة</text><path d="M318 24 L238 30" stroke="#8C8C86" stroke-width="3" stroke-dasharray="1 5" fill="none" stroke-linecap="round"/><g transform="translate(224 64)"><rect x="-22" y="-7" width="44" height="13" rx="6.5" fill="#C2412D"/><text y="2.5" font-size="6" fill="#fff" text-anchor="middle" font-weight="bold" font-family="DejaVu Sans">زحمة عالية</text></g><g transform="translate(118 122)"><rect x="-20" y="-7" width="40" height="13" rx="6.5" fill="#2E8B57"/><text y="2.5" font-size="6" fill="#fff" text-anchor="middle" font-weight="bold" font-family="DejaVu Sans">شبه فارغ</text></g></svg>
+  <div class="sh" style="margin-top:9px;padding:12px 13px;border:2px solid var(--gold)">
+  <div class="row between"><div><div class="row gap6"><span style="width:22px;height:22px;border-radius:7px;background:#1A3D30;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">A</span><div class="b t14">المحطة الأبعد</div><span class="badge">موصى به</span></div><div class="t11 t-mute" style="margin-top:2px">حافلة ثم المترو عبر المسار الأحمر</div></div><div style="text-align:left"><div class="b ltr" style="font-size:22px;color:var(--green)">07:35</div><div class="s10 t-mute">الوصول</div></div></div>
+  <div class="row" style="align-items:flex-start;margin-top:10px"><div style="flex:1;position:relative;text-align:center"><div style="position:absolute;top:6px;right:50%;width:100%;height:4px;background:#0F8A7E"></div><div style="width:15px;height:15px;border-radius:50%;background:#fff;border:3px solid #0F8A7E;margin:0px auto 0;position:relative;z-index:1"></div><div style="font-size:10.5px;margin-top:4px;line-height:1.25;font-weight:bold">موقف الحافلة</div></div><div style="flex:1;position:relative;text-align:center"><div style="position:absolute;top:6px;right:50%;width:100%;height:4px;background:#D7262E"></div><div style="width:11px;height:11px;border-radius:50%;background:#fff;border:3px solid #0F8A7E;margin:2px auto 0;position:relative;z-index:1"></div><div style="font-size:10.5px;margin-top:4px;line-height:1.25;color:#8a8a82"></div></div><div style="flex:1;position:relative;text-align:center"><div style="position:absolute;top:6px;right:50%;width:100%;height:4px;background:#D7262E"></div><div style="width:15px;height:15px;border-radius:50%;background:#fff;border:3px solid #D7262E;margin:0px auto 0;position:relative;z-index:1"></div><div style="font-size:10.5px;margin-top:4px;line-height:1.25;font-weight:bold">التخصصي</div></div><div style="flex:1;position:relative;text-align:center"><div style="position:absolute;top:6px;right:50%;width:100%;height:4px;background:#D7262E"></div><div style="width:11px;height:11px;border-radius:50%;background:#fff;border:3px solid #D7262E;margin:2px auto 0;position:relative;z-index:1"></div><div style="font-size:10.5px;margin-top:4px;line-height:1.25;color:#8a8a82">KACST</div></div><div style="flex:1;position:relative;text-align:center"><div style="position:absolute;top:6px;right:50%;width:100%;height:4px;background:#D7262E"></div><div style="width:11px;height:11px;border-radius:50%;background:#fff;border:3px solid #D7262E;margin:2px auto 0;position:relative;z-index:1"></div><div style="font-size:10.5px;margin-top:4px;line-height:1.25;color:#8a8a82">الواحة</div></div><div style="flex:1;position:relative;text-align:center"><div style="width:15px;height:15px;border-radius:50%;background:#fff;border:3px solid #D7262E;margin:0px auto 0;position:relative;z-index:1"></div><div style="font-size:10.5px;margin-top:4px;line-height:1.25;font-weight:bold">الجامعة</div></div></div><div class="row between t12" style="margin-top:6px"><span class="row gap6 t-mute"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2E8B57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1-3.6 4-5.5 7-5.5s6 1.9 7 5.5"/></svg> الازدحام</span><b style="color:#2E8B57">شبه فارغ · تركب أول قطار</b></div><div class="row between t12" style="margin-top:6px"><span class="row gap6 t-mute"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="6" r="2.2"/><path d="M8 18h7a3.5 3.5 0 0 0 0-7H9a3.5 3.5 0 0 1 0-7h7"/></svg> التحويل</span><b style="color:var(--ink)">لا يوجد</b></div>
+  <div class="row between" style="margin-top:8px;background:var(--ivory);border-radius:10px;padding:6px 10px"><span class="t11 t-mute">عربات القطار الآن</span><div class="row" style="gap:3px;direction:ltr"><div style="width:20px;height:10px;border-radius:3px;background:#2E8B57;opacity:0.48"></div><div style="width:20px;height:10px;border-radius:3px;background:#2E8B57;opacity:0.48"></div><div style="width:20px;height:10px;border-radius:3px;background:#2E8B57;opacity:0.35"></div><div style="width:20px;height:10px;border-radius:3px;background:#2E8B57;opacity:0.48"></div><div style="width:20px;height:10px;border-radius:3px;background:#2E8B57;opacity:0.35"></div><div style="width:20px;height:10px;border-radius:3px;background:#2E8B57;opacity:0.48"></div></div></div></div>
+  <div class="sh" style="margin-top:9px;padding:12px 13px;">
+  <div class="row between"><div><div class="row gap6"><span style="width:22px;height:22px;border-radius:7px;background:#C2412D;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">C</span><div class="b t14">أقرب محطة مترو</div><span class="badge red">مزدحم</span></div><div class="t11 t-mute" style="margin-top:2px">المترو عبر المسار الأزرق ثم الأحمر</div></div><div style="text-align:left"><div class="b ltr" style="font-size:22px;color:var(--red)">07:43</div><div class="s10 t-mute">الوصول</div></div></div>
+  <div class="row" style="align-items:flex-start;margin-top:10px"><div style="flex:1;position:relative;text-align:center"><div style="position:absolute;top:6px;right:50%;width:100%;height:4px;background:#0B6FC6"></div><div style="width:15px;height:15px;border-radius:50%;background:#fff;border:3px solid #0B6FC6;margin:0px auto 0;position:relative;z-index:1"></div><div style="font-size:10.5px;margin-top:4px;line-height:1.25;font-weight:bold">أقرب محطة</div></div><div style="flex:1;position:relative;text-align:center"><div style="position:absolute;top:6px;right:50%;width:100%;height:4px;background:#0B6FC6"></div><div style="width:11px;height:11px;border-radius:50%;background:#fff;border:3px solid #0B6FC6;margin:2px auto 0;position:relative;z-index:1"></div><div style="font-size:10.5px;margin-top:4px;line-height:1.25;color:#8a8a82"></div></div><div style="flex:1;position:relative;text-align:center"><div style="position:absolute;top:6px;right:50%;width:100%;height:4px;background:#D7262E"></div><div style="width:11px;height:11px;border-radius:50%;background:#fff;border:3px solid #0B6FC6;margin:2px auto 0;position:relative;z-index:1"></div><div style="font-size:10.5px;margin-top:4px;line-height:1.25;color:#8a8a82"></div></div><div style="flex:1;position:relative;text-align:center"><div style="position:absolute;top:6px;right:50%;width:100%;height:4px;background:#D7262E"></div><div style="width:15px;height:15px;border-radius:50%;background:#fff;border:3px solid #222;margin:0px auto 0;position:relative;z-index:1"></div><div style="font-size:10.5px;margin-top:4px;line-height:1.25;font-weight:bold">STC</div></div><div style="flex:1;position:relative;text-align:center"><div style="position:absolute;top:6px;right:50%;width:100%;height:4px;background:#D7262E"></div><div style="width:11px;height:11px;border-radius:50%;background:#fff;border:3px solid #D7262E;margin:2px auto 0;position:relative;z-index:1"></div><div style="font-size:10.5px;margin-top:4px;line-height:1.25;color:#8a8a82">التخصصي</div></div><div style="flex:1;position:relative;text-align:center"><div style="position:absolute;top:6px;right:50%;width:100%;height:4px;background:#D7262E"></div><div style="width:11px;height:11px;border-radius:50%;background:#fff;border:3px solid #D7262E;margin:2px auto 0;position:relative;z-index:1"></div><div style="font-size:10.5px;margin-top:4px;line-height:1.25;color:#8a8a82">الواحة</div></div><div style="flex:1;position:relative;text-align:center"><div style="width:15px;height:15px;border-radius:50%;background:#fff;border:3px solid #D7262E;margin:0px auto 0;position:relative;z-index:1"></div><div style="font-size:10.5px;margin-top:4px;line-height:1.25;font-weight:bold">الجامعة</div></div></div><div class="row between t12" style="margin-top:6px"><span class="row gap6 t-mute"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C2412D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1-3.6 4-5.5 7-5.5s6 1.9 7 5.5"/></svg> الازدحام</span><b style="color:#C2412D">95% · غالبًا تنتظر قطارًا ثانيًا</b></div><div class="row between t12" style="margin-top:6px"><span class="row gap6 t-mute"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C2412D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="6" r="2.2"/><path d="M8 18h7a3.5 3.5 0 0 0 0-7H9a3.5 3.5 0 0 1 0-7h7"/></svg> التحويل</span><b style="color:var(--ink)">في STC · 5 دقائق</b></div>
+  <div style="margin-top:8px;background:#F1EEE8;border-radius:12px;padding:9px 12px"><div class="t12 b" style="color:#C2412D">لماذا أبطأ رغم أنها أقرب؟</div>
+<div class="row gap6" style="margin-top:6px;flex-wrap:wrap"><span style="background:#fff;border-radius:999px;padding:4px 9px" class="t11 b">مشي · 7 د</span> <b class="t-mute">+</b> <span style="background:#fff;border-radius:999px;padding:4px 9px" class="t11 b">انتظار قطار ثانٍ · 6 د</span> <b class="t-mute">+</b> <span style="background:#fff;border-radius:999px;padding:4px 9px" class="t11 b">تحويل في STC · 5 د</span></div>
+<div class="t12 b" style="margin-top:6px">= تصل 07:43 بدل 07:35</div></div><div class="row between" style="margin-top:8px;background:var(--ivory);border-radius:10px;padding:6px 10px"><span class="t11 t-mute">عربات القطار الآن</span><div class="row" style="gap:3px;direction:ltr"><div style="width:20px;height:10px;border-radius:3px;background:#C2412D;opacity:1.0"></div><div style="width:20px;height:10px;border-radius:3px;background:#C2412D;opacity:1.0"></div><div style="width:20px;height:10px;border-radius:3px;background:#C2412D;opacity:1.0"></div><div style="width:20px;height:10px;border-radius:3px;background:#C2412D;opacity:1.0"></div><div style="width:20px;height:10px;border-radius:3px;background:#C2412D;opacity:0.87"></div><div style="width:20px;height:10px;border-radius:3px;background:#C2412D;opacity:1.0"></div></div></div></div>
+  </div><div style="position:absolute;bottom:0;left:0;right:0;padding:12px 18px 28px;background:linear-gradient(rgba(245,240,230,0),var(--ivory) 25%);z-index:9"><div class="row gap8"><div style="flex:1"><div class="btn " style="height:52px;font-size:15.5px;border-radius:16px;;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M14.5 6l-6 6 6 6"/></svg>تابع بالخيار A</div></div><div class="btn soft" style="flex:1;height:52px;border-radius:16px;font-size:14px">رجوع إلى الخيارات</div></div></div></div><div class="home-ind"></div></section><section class="screen long" data-id="05" aria-label="خطوات الرحلة"><div class="scroll"><div class="island"></div><div class="status"><span>9:41</span><span class="icons">
+<svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#111"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="#111"/><rect x="10" y="3" width="3" height="9" rx="1" fill="#111"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#111"/></svg>
+<svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.5 5.6 8.6a3.6 3.6 0 0 1 4.8 0z" fill="#111"/><path d="M3.4 6.4a6.8 6.8 0 0 1 9.2 0" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M1 3.8a10.6 10.6 0 0 1 14 0" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+<svg width="26" height="12" viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" opacity=".45"/><rect x="2.2" y="2.2" width="18.6" height="7.6" rx="2" fill="#111"/><rect x="23.8" y="4" width="1.8" height="4" rx=".8" fill="#111" opacity=".45"/></svg>
+</span></div><div class="mapwrap" style="height:262px"><div style="position:absolute;top:50px;left:0;right:0"><svg width="402" height="201" viewBox="0 0 360 180" preserveAspectRatio="xMidYMid meet" style="display:block;border-radius:0;direction:ltr"><rect width="360" height="180" fill="#F2EFE8"/><path d="M0 150 C40 146 70 160 90 180 H0z" fill="#D6EBD3"/><rect x="9" y="9" width="58" height="28" rx="4" fill="#E4E0D7"/><rect x="9" y="55" width="58" height="40" rx="4" fill="#E4E0D7"/><rect x="87" y="9" width="60" height="28" rx="4" fill="#E4E0D7"/><rect x="87" y="55" width="60" height="40" rx="4" fill="#E4E0D7"/><rect x="87" y="125" width="60" height="22" rx="4" fill="#E4E0D7"/><rect x="167" y="9" width="56" height="28" rx="4" fill="#E4E0D7"/><rect x="167" y="55" width="56" height="40" rx="4" fill="#E4E0D7"/><rect x="167" y="125" width="56" height="22" rx="4" fill="#E4E0D7"/><rect x="167" y="163" width="56" height="10" rx="4" fill="#E4E0D7"/><rect x="253" y="9" width="44" height="28" rx="4" fill="#E4E0D7"/><rect x="253" y="55" width="44" height="40" rx="4" fill="#E4E0D7"/><rect x="253" y="125" width="44" height="22" rx="4" fill="#E4E0D7"/><rect x="253" y="163" width="44" height="10" rx="4" fill="#E4E0D7"/><rect x="317" y="9" width="36" height="28" rx="4" fill="#E4E0D7"/><rect x="317" y="55" width="36" height="40" rx="4" fill="#E4E0D7"/><rect x="317" y="125" width="36" height="22" rx="4" fill="#E4E0D7"/><rect x="317" y="163" width="36" height="10" rx="4" fill="#E4E0D7"/><rect x="74" y="0" width="6" height="180" fill="#fff"/><rect x="154" y="0" width="6" height="180" fill="#fff"/><rect x="304" y="0" width="6" height="180" fill="#fff"/><rect x="0" y="43" width="360" height="6" fill="#fff"/><rect x="0" y="152" width="360" height="6" fill="#fff"/><rect x="0" y="104" width="360" height="12" fill="#F6D98A"/><rect x="232" y="0" width="12" height="180" fill="#F6D98A"/><text x="300" y="126" font-size="6" fill="#6d6a60" text-anchor="middle" font-family="DejaVu Sans">طريق الملك عبدالله</text><text transform="translate(252 160) rotate(90)" font-size="6" fill="#6d6a60" text-anchor="middle" font-family="DejaVu Sans">طريق العليا</text><path d="M238 0 V110" stroke="#0B6FC6" stroke-width="4" opacity="0.3" stroke-linecap="round"/><path d="M40 110 H238" stroke="#D7262E" stroke-width="6" opacity="1" stroke-linecap="round"/><path d="M238 110 H360" stroke="#D7262E" stroke-width="4" opacity=".3"/><circle cx="40" cy="110" r="4.2" fill="#fff" stroke="#D7262E" stroke-width="2.4" opacity="1"/><circle cx="92" cy="110" r="4.2" fill="#fff" stroke="#D7262E" stroke-width="2.4" opacity="1"/><circle cx="144" cy="110" r="4.2" fill="#fff" stroke="#D7262E" stroke-width="2.4" opacity="1"/><circle cx="196" cy="110" r="4.2" fill="#fff" stroke="#D7262E" stroke-width="2.4" opacity="1"/><text x="92" y="100" font-size="5.6" fill="#D7262E" text-anchor="middle" font-family="DejaVu Sans" opacity="1">واحة الملك سلمان</text><text x="144" y="100" font-size="5.6" fill="#D7262E" text-anchor="middle" font-family="DejaVu Sans" opacity="1">KACST</text><text x="196" y="100" font-size="5.6" fill="#D7262E" text-anchor="middle" font-family="DejaVu Sans" opacity="1">التخصصي</text><circle cx="238" cy="30" r="4.2" fill="#fff" stroke="#0B6FC6" stroke-width="2.4" opacity="0.6"/><text x="230" y="24" font-size="5.6" fill="#0B6FC6" text-anchor="end" font-family="DejaVu Sans" opacity="0.6">أقرب محطة</text><circle cx="238" cy="110" r="6.5" fill="#fff" stroke="#222" stroke-width="2.4"/><text x="246" y="99" font-size="5.8" fill="#222" font-weight="bold" font-family="DejaVu Sans">STC</text><path d="M318 24 L300 46" stroke="#8C8C86" stroke-width="3.2" stroke-dasharray="1 5" stroke-linecap="round" fill="none"/><path d="M300 46 C290 70 250 96 196 110" stroke="#0F8A7E" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M40 110 L36 140" stroke="#8C8C86" stroke-width="3.2" stroke-dasharray="1 5" stroke-linecap="round" fill="none"/><g transform="translate(293 39)"><rect width="14" height="14" rx="4" fill="#0F8A7E" stroke="#fff" stroke-width="1.8"/><g transform="translate(2 2) scale(.42)" stroke="#fff" stroke-width="3" fill="none"><rect x="5" y="4" width="14" height="13" rx="2.5"/><path d="M5 11h14"/></g></g><circle cx="318" cy="24" r="5" fill="#fff" stroke="#333" stroke-width="2.4"/><text x="320" y="16" font-size="6.5" fill="#333" text-anchor="end" font-family="DejaVu Sans">حي النرجس</text><g transform="translate(28 119)"><path d="M8 21s-7-6.6-7-11.6a7 7 0 0 1 14 0C15 14.4 8 21 8 21z" fill="#D93A2B"/><circle cx="8" cy="9.2" r="2.6" fill="#7d1a12"/></g><text x="46" y="142" font-size="6.5" fill="#C2412D" font-weight="bold" font-family="DejaVu Sans">الجامعة</text></svg></div></div>
+    <div class="fab" style="top:58px;right:18px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M9.5 6l6 6-6 6"/></svg></div><div class="fab" style="top:58px;left:18px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="18" cy="5.5" r="2.4"/><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="18.5" r="2.4"/><path d="M8.2 10.9l7.6-4.2M8.2 13.1l7.6 4.2"/></svg></div>
+<div class="sheet2" style="top:236px"><div class="handle"></div>
+  <div class="row between"><div><div class="b" style="font-size:19px">خطوات رحلتك</div><div class="t11 t-mute">حافلة + مترو</div></div><span class="badge green"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> الربط مضمون</span></div>
+  <div class="row gap6" style="margin-top:10px"><div style="flex:1;text-align:center;background:#fff;border-radius:14px;padding:8px 4px;box-shadow:0 2px 8px rgba(0,0,0,.04)"><div class="b t13">35 د</div><div class="t11 t-mute">المدة</div></div><div style="flex:1;text-align:center;background:#fff;border-radius:14px;padding:8px 4px;box-shadow:0 2px 8px rgba(0,0,0,.04)"><div class="b t13">4 ر.س</div><div class="t11 t-mute">تذكرة واحدة</div></div><div style="flex:1;text-align:center;background:#fff;border-radius:14px;padding:8px 4px;box-shadow:0 2px 8px rgba(0,0,0,.04)"><div class="b t13"><span class="ltr">07:35</span></div><div class="t11 t-mute">الوصول</div></div></div>
+  <div class="sh" style="margin-top:10px;padding:13px 13px 3px">
+    <div class="row" style="align-items:flex-start;gap:12px;position:relative;padding-bottom:12px">
+      <div style="width:16px;position:relative;align-self:stretch"><div style="position:absolute;top:16px;bottom:-4px;right:6px;width:3px;background:#B5B3AA;border-radius:2px"></div><div style="width:16px;height:16px;border-radius:50%;background:#fff;border:4px solid #1A3D30;position:relative;z-index:1"></div></div>
+      <div style="flex:1"><div class="row gap6"><div class="b t13">انطلق من المنزل</div></div><div class="t11 t-mute" style="margin-top:2px">مشي 5 دقائق · 350 م</div></div>
+      <div class="b t12 ltr">07:00</div></div>
+    <div class="row" style="align-items:flex-start;gap:12px;position:relative;padding-bottom:12px">
+      <div style="width:16px;position:relative;align-self:stretch"><div style="position:absolute;top:16px;bottom:-4px;right:6px;width:4px;background:#0F8A7E;border-radius:2px"></div><div style="width:16px;height:16px;border-radius:50%;background:#fff;border:4px solid #0F8A7E;position:relative;z-index:1"></div></div>
+      <div style="flex:1"><div class="row gap6"><div class="b t13">اركب الحافلة</div><span class="lchip" style="background:#0F8A7E"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="5" y="4" width="14" height="13" rx="2.5"/><path d="M5 11h14"/><path d="M8 17v2.5M16 17v2.5"/><circle cx="8.5" cy="14" r=".6"/><circle cx="15.5" cy="14" r=".6"/></svg>خط 9</span></div><div class="t11 t-mute" style="margin-top:2px">تمر على 3 مواقف فقط</div></div>
+      <div class="b t12 ltr">07:05</div></div>
+    <div class="row" style="align-items:flex-start;gap:12px;position:relative;padding-bottom:12px">
+      <div style="width:16px;position:relative;align-self:stretch"><div style="position:absolute;top:16px;bottom:-4px;right:6px;width:5px;background:#D7262E;border-radius:2px"></div><div style="width:16px;height:16px;border-radius:50%;background:#fff;border:4px solid #D7262E;position:relative;z-index:1"></div></div>
+      <div style="flex:1"><div class="row gap6"><div class="b t13">محطة التخصصي</div><span class="lchip" style="background:#D7262E"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="6" y="3.5" width="12" height="14" rx="3"/><path d="M6 10h12"/><path d="M9 21l1.5-3.5M15 21l-1.5-3.5"/><circle cx="9.5" cy="14" r=".6"/><circle cx="14.5" cy="14" r=".6"/></svg>مترو · المسار الأحمر</span></div><div class="t11 t-mute" style="margin-top:2px">البوابة 2 · انتظار 3 دقائق</div></div>
+      <div class="b t12 ltr">07:17</div></div>
+    <div class="row" style="align-items:flex-start;gap:12px;position:relative;padding-bottom:12px">
+      <div style="width:16px;position:relative;align-self:stretch"><div style="position:absolute;top:16px;bottom:-4px;right:6px;width:5px;background:#D7262E;border-radius:2px"></div><div style="width:16px;height:16px;border-radius:50%;background:#fff;border:4px solid #D7262E;position:relative;z-index:1"></div></div>
+      <div style="flex:1"><div class="row gap6"><div class="b t13">المترو نحو الجامعة</div></div><div class="t11 t-mute" style="margin-top:2px">التخصصي ← KACST ← الواحة ← الجامعة</div></div>
+      <div class="b t12 ltr">07:20</div></div>
+    <div class="row" style="align-items:flex-start;gap:12px;position:relative;padding-bottom:12px">
+      <div style="width:16px;position:relative;align-self:stretch"><div style="position:absolute;top:16px;bottom:-4px;right:6px;width:3px;background:#B5B3AA;border-radius:2px"></div><div style="width:16px;height:16px;border-radius:50%;background:#fff;border:4px solid #D7262E;position:relative;z-index:1"></div></div>
+      <div style="flex:1"><div class="row gap6"><div class="b t13">انزل في محطة الجامعة</div></div><div class="t11 t-mute" style="margin-top:2px">المخرج 1 · مشي 3 دقائق</div></div>
+      <div class="b t12 ltr">07:32</div></div>
+    <div class="row" style="align-items:flex-start;gap:12px;position:relative;padding-bottom:12px">
+      <div style="width:16px;position:relative;align-self:stretch"><div style="width:16px;height:16px;border-radius:50%;background:#fff;border:4px solid #2E8B57;position:relative;z-index:1"></div></div>
+      <div style="flex:1"><div class="row gap6"><div class="b t13">وصلت</div></div><div class="t11 t-mute" style="margin-top:2px">جامعة الملك سعود · البوابة الرئيسية</div></div>
+      <div class="b t12 ltr">07:35</div></div>
+  </div>
+</div>
+<div style="position:absolute;bottom:0;left:0;right:0;padding:12px 18px 28px;background:linear-gradient(rgba(245,240,230,0),var(--ivory) 25%);z-index:9"><div class="btn " style="height:52px;font-size:15.5px;border-radius:16px;;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M8 5.5v13l10.5-6.5z"/></svg>ابدأ الرحلة</div></div></div><div class="home-ind"></div></section><section class="screen" data-id="06" aria-label="رحلتك الآن"><div class="scroll"><div class="island"></div><div class="status"><span>9:41</span><span class="icons">
+<svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#111"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="#111"/><rect x="10" y="3" width="3" height="9" rx="1" fill="#111"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#111"/></svg>
+<svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.5 5.6 8.6a3.6 3.6 0 0 1 4.8 0z" fill="#111"/><path d="M3.4 6.4a6.8 6.8 0 0 1 9.2 0" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M1 3.8a10.6 10.6 0 0 1 14 0" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+<svg width="26" height="12" viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" opacity=".45"/><rect x="2.2" y="2.2" width="18.6" height="7.6" rx="2" fill="#111"/><rect x="23.8" y="4" width="1.8" height="4" rx=".8" fill="#111" opacity=".45"/></svg>
+</span></div><div class="mapwrap" style="height:262px"><div style="position:absolute;top:50px;left:0;right:0"><svg width="402" height="201" viewBox="0 0 360 180" preserveAspectRatio="xMidYMid meet" style="display:block;border-radius:0;direction:ltr"><rect width="360" height="180" fill="#F2EFE8"/><path d="M0 150 C40 146 70 160 90 180 H0z" fill="#D6EBD3"/><rect x="9" y="9" width="58" height="28" rx="4" fill="#E4E0D7"/><rect x="9" y="55" width="58" height="40" rx="4" fill="#E4E0D7"/><rect x="87" y="9" width="60" height="28" rx="4" fill="#E4E0D7"/><rect x="87" y="55" width="60" height="40" rx="4" fill="#E4E0D7"/><rect x="87" y="125" width="60" height="22" rx="4" fill="#E4E0D7"/><rect x="167" y="9" width="56" height="28" rx="4" fill="#E4E0D7"/><rect x="167" y="55" width="56" height="40" rx="4" fill="#E4E0D7"/><rect x="167" y="125" width="56" height="22" rx="4" fill="#E4E0D7"/><rect x="167" y="163" width="56" height="10" rx="4" fill="#E4E0D7"/><rect x="253" y="9" width="44" height="28" rx="4" fill="#E4E0D7"/><rect x="253" y="55" width="44" height="40" rx="4" fill="#E4E0D7"/><rect x="253" y="125" width="44" height="22" rx="4" fill="#E4E0D7"/><rect x="253" y="163" width="44" height="10" rx="4" fill="#E4E0D7"/><rect x="317" y="9" width="36" height="28" rx="4" fill="#E4E0D7"/><rect x="317" y="55" width="36" height="40" rx="4" fill="#E4E0D7"/><rect x="317" y="125" width="36" height="22" rx="4" fill="#E4E0D7"/><rect x="317" y="163" width="36" height="10" rx="4" fill="#E4E0D7"/><rect x="74" y="0" width="6" height="180" fill="#fff"/><rect x="154" y="0" width="6" height="180" fill="#fff"/><rect x="304" y="0" width="6" height="180" fill="#fff"/><rect x="0" y="43" width="360" height="6" fill="#fff"/><rect x="0" y="152" width="360" height="6" fill="#fff"/><rect x="0" y="104" width="360" height="12" fill="#F6D98A"/><rect x="232" y="0" width="12" height="180" fill="#F6D98A"/><text x="300" y="126" font-size="6" fill="#6d6a60" text-anchor="middle" font-family="DejaVu Sans">طريق الملك عبدالله</text><text transform="translate(252 160) rotate(90)" font-size="6" fill="#6d6a60" text-anchor="middle" font-family="DejaVu Sans">طريق العليا</text><path d="M238 0 V110" stroke="#0B6FC6" stroke-width="4" opacity="0.3" stroke-linecap="round"/><path d="M40 110 H238" stroke="#D7262E" stroke-width="6" opacity="1" stroke-linecap="round"/><path d="M238 110 H360" stroke="#D7262E" stroke-width="4" opacity=".3"/><circle cx="40" cy="110" r="4.2" fill="#fff" stroke="#D7262E" stroke-width="2.4" opacity="1"/><circle cx="92" cy="110" r="4.2" fill="#fff" stroke="#D7262E" stroke-width="2.4" opacity="1"/><circle cx="144" cy="110" r="4.2" fill="#fff" stroke="#D7262E" stroke-width="2.4" opacity="1"/><circle cx="196" cy="110" r="4.2" fill="#fff" stroke="#D7262E" stroke-width="2.4" opacity="1"/><text x="92" y="100" font-size="5.6" fill="#D7262E" text-anchor="middle" font-family="DejaVu Sans" opacity="1">واحة الملك سلمان</text><text x="144" y="100" font-size="5.6" fill="#D7262E" text-anchor="middle" font-family="DejaVu Sans" opacity="1">KACST</text><text x="196" y="100" font-size="5.6" fill="#D7262E" text-anchor="middle" font-family="DejaVu Sans" opacity="1">التخصصي</text><circle cx="238" cy="30" r="4.2" fill="#fff" stroke="#0B6FC6" stroke-width="2.4" opacity="0.6"/><text x="230" y="24" font-size="5.6" fill="#0B6FC6" text-anchor="end" font-family="DejaVu Sans" opacity="0.6">أقرب محطة</text><circle cx="238" cy="110" r="6.5" fill="#fff" stroke="#222" stroke-width="2.4"/><text x="246" y="99" font-size="5.8" fill="#222" font-weight="bold" font-family="DejaVu Sans">STC</text><path d="M318 24 L300 46" stroke="#8C8C86" stroke-width="3.2" stroke-dasharray="1 5" stroke-linecap="round" fill="none"/><path d="M300 46 C290 70 250 96 196 110" stroke="#0F8A7E" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M40 110 L36 140" stroke="#8C8C86" stroke-width="3.2" stroke-dasharray="1 5" stroke-linecap="round" fill="none"/><g transform="translate(293 39)"><rect width="14" height="14" rx="4" fill="#0F8A7E" stroke="#fff" stroke-width="1.8"/><g transform="translate(2 2) scale(.42)" stroke="#fff" stroke-width="3" fill="none"><rect x="5" y="4" width="14" height="13" rx="2.5"/><path d="M5 11h14"/></g></g><circle cx="318" cy="24" r="5" fill="#fff" stroke="#333" stroke-width="2.4"/><text x="320" y="16" font-size="6.5" fill="#333" text-anchor="end" font-family="DejaVu Sans">حي النرجس</text><g transform="translate(28 119)"><path d="M8 21s-7-6.6-7-11.6a7 7 0 0 1 14 0C15 14.4 8 21 8 21z" fill="#D93A2B"/><circle cx="8" cy="9.2" r="2.6" fill="#7d1a12"/></g><text x="46" y="142" font-size="6.5" fill="#C2412D" font-weight="bold" font-family="DejaVu Sans">الجامعة</text><circle cx="309" cy="33" r="11" fill="#2F6FE4" opacity=".2"/><circle cx="309" cy="33" r="5.5" fill="#2F6FE4" stroke="#fff" stroke-width="2.2"/></svg></div></div>
+    <div class="fab" style="top:58px;right:18px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M9.5 6l6 6-6 6"/></svg></div><div class="pill" style="top:62px;left:18px"><span style="width:8px;height:8px;border-radius:50%;background:#2E8B57"></span> مباشر · <span class="ltr">07:02</span></div>
+<div class="sheet2" style="top:236px"><div class="handle"></div>
+  <div style="position:relative;margin:2px 0 12px"><div style="position:absolute;top:7px;right:28px;left:28px;height:2px;background:#DDD6C6"></div>
+    <div style="position:absolute;top:7px;right:28px;width:calc((100% - 56px)*0.25);height:2px;background:var(--green)"></div>
+    <div class="row between"><div style="display:flex;flex-direction:column;align-items:center;gap:5px;width:56px;z-index:1"><div style="width:16px;height:16px;border-radius:50%;border:2px solid;background:var(--green);border-color:var(--green)"></div><div class="s9 b">الانطلاق</div></div><div style="display:flex;flex-direction:column;align-items:center;gap:5px;width:56px;z-index:1"><div style="width:16px;height:16px;border-radius:50%;border:2px solid;background:#fff;border:3px solid var(--gold)"></div><div class="s9 b">المشي</div></div><div style="display:flex;flex-direction:column;align-items:center;gap:5px;width:56px;z-index:1"><div style="width:16px;height:16px;border-radius:50%;border:2px solid;background:#fff;border-color:#D6CFBF"></div><div class="s9 t-mute">الحافلة</div></div><div style="display:flex;flex-direction:column;align-items:center;gap:5px;width:56px;z-index:1"><div style="width:16px;height:16px;border-radius:50%;border:2px solid;background:#fff;border-color:#D6CFBF"></div><div class="s9 t-mute">المترو</div></div><div style="display:flex;flex-direction:column;align-items:center;gap:5px;width:56px;z-index:1"><div style="width:16px;height:16px;border-radius:50%;border:2px solid;background:#fff;border-color:#D6CFBF"></div><div class="s9 t-mute">الوصول</div></div></div></div>
+  <div class="hero" style="padding:13px 14px;margin-top:2px">
+    <div class="row gap12" style="position:relative;z-index:1"><div class="ibox" style="width:46px;height:46px;border-radius:14px;background:rgba(255,255,255,.15)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="13" cy="4.5" r="1.8"/><path d="M10 21l2-6 3 3v3"/><path d="M8 11l3-3 3 2 2 3"/><path d="M12 15l-1-6"/></svg></div><div style="flex:1"><div class="t11" style="opacity:.7">الآن</div><div class="b" style="font-size:18px">امشِ إلى الموقف</div><div class="t11" style="opacity:.75;margin-top:2px">متبقٍ 200 م · انعطف يمينًا عند الإشارة</div></div><div style="text-align:center"><div class="b ltr gold" style="font-size:19px">07:35</div><div class="t11" style="opacity:.7">الوصول</div></div></div>
+    <div style="height:6px;border-radius:3px;background:rgba(255,255,255,.18);margin-top:12px;position:relative;z-index:1"><div style="width:60%;height:6px;border-radius:3px;background:#E3C78F;margin-right:0"></div></div>
+  </div>
+  <div class="sh" style="margin-top:10px;padding:11px 13px">
+    <div class="row gap10"><div class="ibox" style="width:36px;height:36px;border-radius:12px;background:#DDF0EC"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F8A7E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="5" y="4" width="14" height="13" rx="2.5"/><path d="M5 11h14"/><path d="M8 17v2.5M16 17v2.5"/><circle cx="8.5" cy="14" r=".6"/><circle cx="15.5" cy="14" r=".6"/></svg></div><div style="flex:1"><div class="row gap6"><div class="b t13">الحافلة</div><span class="lchip" style="background:#0F8A7E"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="5" y="4" width="14" height="13" rx="2.5"/><path d="M5 11h14"/><path d="M8 17v2.5M16 17v2.5"/><circle cx="8.5" cy="14" r=".6"/><circle cx="15.5" cy="14" r=".6"/></svg>خط 9</span></div><div class="t11 t-mute" style="margin-top:2px">تصل الموقف <span class="ltr">07:05</span> · على بُعد 1.2 كم</div></div><span class="badge green">في موعدها</span></div>
+    <div class="divider" style="margin:10px 0"></div>
+    <div class="row gap10"><div class="ibox" style="width:36px;height:36px;border-radius:12px;background:#F1EEE8"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#D7262E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="6" y="3.5" width="12" height="14" rx="3"/><path d="M6 10h12"/><path d="M9 21l1.5-3.5M15 21l-1.5-3.5"/><circle cx="9.5" cy="14" r=".6"/><circle cx="14.5" cy="14" r=".6"/></svg></div><div style="flex:1"><div class="row gap6"><div class="b t13">المترو</div><span class="lchip" style="background:#D7262E"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="6" y="3.5" width="12" height="14" rx="3"/><path d="M6 10h12"/><path d="M9 21l1.5-3.5M15 21l-1.5-3.5"/><circle cx="9.5" cy="14" r=".6"/><circle cx="14.5" cy="14" r=".6"/></svg>مترو · المسار الأحمر</span></div><div class="t11 t-mute" style="margin-top:2px">من التخصصي <span class="ltr">07:20</span> · العربتان 1 و2 الأقل ازدحامًا</div></div><span class="crowd" style="color:#2E8B57"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#2E8B57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1-3.6 4-5.5 7-5.5s6 1.9 7 5.5"/></svg><span class="cbar"><i style="background:#2E8B57"></i><i style="background:#E2DBCB"></i><i style="background:#E2DBCB"></i><i style="background:#E2DBCB"></i><i style="background:#E2DBCB"></i></span></span></div>
+    <div class="row gap8" style="margin-top:10px"><span class="t11 t-mute row gap4"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#9C7A3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg> احتمال اللحاق</span><div style="flex:1;height:6px;border-radius:3px;background:#EDE7DA"><div style="width:90%;height:6px;border-radius:3px;background:var(--green)"></div></div><b class="t12" style="color:var(--green)">90%</b></div>
+  </div>
+<div class="sh" style="margin-top:10px;padding:12px 15px"><div class="row between"><b class="t14">باقي رحلتك</b><span class="t11 t-mute">35 دقيقة · 4 ر.س</span></div>
+<div class="row gap10" style="margin-top:8px"><span style="width:10px;height:10px;border-radius:50%;background:#0F8A7E;flex:none"></span><span class="t12 " style="flex:1">اركب الحافلة خط 9 · 3 مواقف</span><b class="t12 ltr" style="color:var(--mute)">07:05</b></div><div class="row gap10" style="margin-top:8px"><span style="width:10px;height:10px;border-radius:50%;background:#D7262E;flex:none"></span><span class="t12 " style="flex:1">محطة التخصصي · البوابة 2</span><b class="t12 ltr" style="color:var(--mute)">07:17</b></div><div class="row gap10" style="margin-top:8px"><span style="width:10px;height:10px;border-radius:50%;background:#D7262E;flex:none"></span><span class="t12 " style="flex:1">المترو عبر المسار الأحمر نحو الجامعة</span><b class="t12 ltr" style="color:var(--mute)">07:20</b></div><div class="row gap10" style="margin-top:8px"><span style="width:10px;height:10px;border-radius:50%;background:#2E8B57;flex:none"></span><span class="t12 b" style="flex:1">الوصول إلى جامعة الملك سعود</span><b class="t12 ltr" style="color:var(--green)">07:35</b></div></div></div></div><div class="home-ind"></div></section><section class="screen dark" data-id="06b" aria-label="إشعار التأخير"><div class="scroll"><div class="island"></div><div class="status"><span>9:41</span><span class="icons">
+<svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#111"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="#111"/><rect x="10" y="3" width="3" height="9" rx="1" fill="#111"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#111"/></svg>
+<svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.5 5.6 8.6a3.6 3.6 0 0 1 4.8 0z" fill="#111"/><path d="M3.4 6.4a6.8 6.8 0 0 1 9.2 0" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M1 3.8a10.6 10.6 0 0 1 14 0" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+<svg width="26" height="12" viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" opacity=".45"/><rect x="2.2" y="2.2" width="18.6" height="7.6" rx="2" fill="#111"/><rect x="23.8" y="4" width="1.8" height="4" rx=".8" fill="#111" opacity=".45"/></svg>
+</span></div><div style="position:absolute;inset:0;background:linear-gradient(160deg,#13302A 0%,#234F3E 55%,#9E8050 100%);z-index:0"></div>
+<div style="position:relative;z-index:2;color:#fff;text-align:center;padding-top:40px"><div class="t15" style="opacity:.85">الأحد</div><div class="ltr" style="font-size:84px;font-weight:300;line-height:1.1">07:05</div></div>
+<div style="position:absolute;z-index:3;left:16px;right:16px;top:330px;background:rgba(255,255,255,.82);border-radius:22px;padding:12px 14px;box-shadow:0 8px 24px rgba(0,0,0,.18)">
+  <div class="row between"><div class="row gap8"><svg width="22" height="22" viewBox="0 0 48 48" style="flex:none">
+<rect width="48" height="48" rx="12" fill="#1A3D30"/>
+<path d="M12 36V24a6 6 0 0 1 12 0v12M24 24a6 6 0 0 1 12 0v12" fill="none" stroke="#F5F0E6" stroke-width="4.2" stroke-linecap="round"/>
+<path d="M24 23.5s-4.6-4.2-4.6-7.8a4.6 4.6 0 0 1 9.2 0c0 3.6-4.6 7.8-4.6 7.8z" fill="#C9A86C"/>
+<circle cx="24" cy="15.6" r="1.7" fill="#1A3D30"/></svg><b class="t12">مِهاد</b></div><span class="t11 t-mute">الآن</span></div>
+  <div class="b t14" style="margin-top:6px">الحافلة متأخرة 20 دقيقة</div>
+  <div class="t12" style="margin-top:4px;line-height:1.6">وجدنا لك طريقًا أسرع يوصلك <span class="ltr">07:43</span> بدل <span class="ltr">07:55</span>. اضغط لعرض البدائل.</div></div>
+<div style="position:absolute;z-index:3;left:0;right:0;top:470px;text-align:center;color:#fff;opacity:.6" class="t11">اضغط على الإشعار</div></div><div class="home-ind"></div></section><section class="screen" data-id="07" aria-label="تنبيه التأخير"><div class="scroll"><div class="island"></div><div class="status"><span>9:41</span><span class="icons">
+<svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#111"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="#111"/><rect x="10" y="3" width="3" height="9" rx="1" fill="#111"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#111"/></svg>
+<svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.5 5.6 8.6a3.6 3.6 0 0 1 4.8 0z" fill="#111"/><path d="M3.4 6.4a6.8 6.8 0 0 1 9.2 0" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M1 3.8a10.6 10.6 0 0 1 14 0" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+<svg width="26" height="12" viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" opacity=".45"/><rect x="2.2" y="2.2" width="18.6" height="7.6" rx="2" fill="#111"/><rect x="23.8" y="4" width="1.8" height="4" rx=".8" fill="#111" opacity=".45"/></svg>
+</span></div><div class="mapwrap" style="height:262px"><div style="position:absolute;top:50px;left:0;right:0"><svg width="402" height="201" viewBox="0 0 360 180" preserveAspectRatio="xMidYMid meet" style="display:block;border-radius:0;direction:ltr"><rect width="360" height="180" fill="#F2EFE8"/><path d="M0 150 C40 146 70 160 90 180 H0z" fill="#D6EBD3"/><rect x="9" y="9" width="58" height="28" rx="4" fill="#E4E0D7"/><rect x="9" y="55" width="58" height="40" rx="4" fill="#E4E0D7"/><rect x="87" y="9" width="60" height="28" rx="4" fill="#E4E0D7"/><rect x="87" y="55" width="60" height="40" rx="4" fill="#E4E0D7"/><rect x="87" y="125" width="60" height="22" rx="4" fill="#E4E0D7"/><rect x="167" y="9" width="56" height="28" rx="4" fill="#E4E0D7"/><rect x="167" y="55" width="56" height="40" rx="4" fill="#E4E0D7"/><rect x="167" y="125" width="56" height="22" rx="4" fill="#E4E0D7"/><rect x="167" y="163" width="56" height="10" rx="4" fill="#E4E0D7"/><rect x="253" y="9" width="44" height="28" rx="4" fill="#E4E0D7"/><rect x="253" y="55" width="44" height="40" rx="4" fill="#E4E0D7"/><rect x="253" y="125" width="44" height="22" rx="4" fill="#E4E0D7"/><rect x="253" y="163" width="44" height="10" rx="4" fill="#E4E0D7"/><rect x="317" y="9" width="36" height="28" rx="4" fill="#E4E0D7"/><rect x="317" y="55" width="36" height="40" rx="4" fill="#E4E0D7"/><rect x="317" y="125" width="36" height="22" rx="4" fill="#E4E0D7"/><rect x="317" y="163" width="36" height="10" rx="4" fill="#E4E0D7"/><rect x="74" y="0" width="6" height="180" fill="#fff"/><rect x="154" y="0" width="6" height="180" fill="#fff"/><rect x="304" y="0" width="6" height="180" fill="#fff"/><rect x="0" y="43" width="360" height="6" fill="#fff"/><rect x="0" y="152" width="360" height="6" fill="#fff"/><rect x="0" y="104" width="360" height="12" fill="#F6D98A"/><rect x="232" y="0" width="12" height="180" fill="#F6D98A"/><text x="300" y="126" font-size="6" fill="#6d6a60" text-anchor="middle" font-family="DejaVu Sans">طريق الملك عبدالله</text><text transform="translate(252 160) rotate(90)" font-size="6" fill="#6d6a60" text-anchor="middle" font-family="DejaVu Sans">طريق العليا</text><path d="M238 0 V110" stroke="#0B6FC6" stroke-width="4" opacity="0.3" stroke-linecap="round"/><path d="M40 110 H238" stroke="#D7262E" stroke-width="6" opacity="1" stroke-linecap="round"/><path d="M238 110 H360" stroke="#D7262E" stroke-width="4" opacity=".3"/><circle cx="40" cy="110" r="4.2" fill="#fff" stroke="#D7262E" stroke-width="2.4" opacity="1"/><circle cx="92" cy="110" r="4.2" fill="#fff" stroke="#D7262E" stroke-width="2.4" opacity="1"/><circle cx="144" cy="110" r="4.2" fill="#fff" stroke="#D7262E" stroke-width="2.4" opacity="1"/><circle cx="196" cy="110" r="4.2" fill="#fff" stroke="#D7262E" stroke-width="2.4" opacity="1"/><text x="92" y="100" font-size="5.6" fill="#D7262E" text-anchor="middle" font-family="DejaVu Sans" opacity="1">واحة الملك سلمان</text><text x="144" y="100" font-size="5.6" fill="#D7262E" text-anchor="middle" font-family="DejaVu Sans" opacity="1">KACST</text><text x="196" y="100" font-size="5.6" fill="#D7262E" text-anchor="middle" font-family="DejaVu Sans" opacity="1">التخصصي</text><circle cx="238" cy="30" r="4.2" fill="#fff" stroke="#0B6FC6" stroke-width="2.4" opacity="0.6"/><text x="230" y="24" font-size="5.6" fill="#0B6FC6" text-anchor="end" font-family="DejaVu Sans" opacity="0.6">أقرب محطة</text><circle cx="238" cy="110" r="6.5" fill="#fff" stroke="#222" stroke-width="2.4"/><text x="246" y="99" font-size="5.8" fill="#222" font-weight="bold" font-family="DejaVu Sans">STC</text><path d="M318 24 L300 46" stroke="#6F6F69" stroke-width="3.2" fill="none"/><path d="M300 46 C290 70 250 96 196 110" stroke="#D93A2B" stroke-width="3.4" stroke-dasharray="6 4" fill="none" stroke-linecap="round"/><g transform="translate(262 84)"><circle r="8.5" fill="#D93A2B" stroke="#fff" stroke-width="2.2"/><path d="M0 -4v4.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><circle cy="3.6" r="1.2" fill="#fff"/></g><g transform="translate(293 39)"><rect width="14" height="14" rx="4" fill="#9BB5A6" stroke="#fff" stroke-width="1.8"/><g transform="translate(2 2) scale(.42)" stroke="#fff" stroke-width="3" fill="none"><rect x="5" y="4" width="14" height="13" rx="2.5"/><path d="M5 11h14"/></g></g><circle cx="318" cy="24" r="5" fill="#fff" stroke="#333" stroke-width="2.4"/><text x="320" y="16" font-size="6.5" fill="#333" text-anchor="end" font-family="DejaVu Sans">حي النرجس</text><g transform="translate(28 119)"><path d="M8 21s-7-6.6-7-11.6a7 7 0 0 1 14 0C15 14.4 8 21 8 21z" fill="#D93A2B"/><circle cx="8" cy="9.2" r="2.6" fill="#7d1a12"/></g><text x="46" y="142" font-size="6.5" fill="#C2412D" font-weight="bold" font-family="DejaVu Sans">الجامعة</text><circle cx="310" cy="50" r="11" fill="#2F6FE4" opacity=".2"/><circle cx="310" cy="50" r="5.5" fill="#2F6FE4" stroke="#fff" stroke-width="2.2"/></svg></div></div>
+    <div class="fab" style="top:58px;right:18px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M9.5 6l6 6-6 6"/></svg></div><div class="pill" style="top:62px;left:18px;color:#C2412D"><span style="width:8px;height:8px;border-radius:50%;background:#C2412D"></span> تنبيه · <span class="ltr">07:05</span></div>
+<div class="sheet2" style="top:236px"><div class="handle"></div>
+  <div style="position:relative;margin:2px 0 12px"><div style="position:absolute;top:7px;right:28px;left:28px;height:2px;background:#DDD6C6"></div>
+    <div style="position:absolute;top:7px;right:28px;width:calc((100% - 56px)*0.5);height:2px;background:var(--green)"></div>
+    <div class="row between"><div style="display:flex;flex-direction:column;align-items:center;gap:5px;width:56px;z-index:1"><div style="width:16px;height:16px;border-radius:50%;border:2px solid;background:var(--green);border-color:var(--green)"></div><div class="s9 b">الانطلاق</div></div><div style="display:flex;flex-direction:column;align-items:center;gap:5px;width:56px;z-index:1"><div style="width:16px;height:16px;border-radius:50%;border:2px solid;background:var(--green);border-color:var(--green)"></div><div class="s9 b">المشي</div></div><div style="display:flex;flex-direction:column;align-items:center;gap:5px;width:56px;z-index:1"><div style="width:16px;height:16px;border-radius:50%;border:2px solid;background:#fff;border:3px solid var(--red)"></div><div class="s9 b">الحافلة</div></div><div style="display:flex;flex-direction:column;align-items:center;gap:5px;width:56px;z-index:1"><div style="width:16px;height:16px;border-radius:50%;border:2px solid;background:#fff;border-color:#D6CFBF"></div><div class="s9 t-mute">المترو</div></div><div style="display:flex;flex-direction:column;align-items:center;gap:5px;width:56px;z-index:1"><div style="width:16px;height:16px;border-radius:50%;border:2px solid;background:#fff;border-color:#D6CFBF"></div><div class="s9 t-mute">الوصول</div></div></div></div>
+  <div class="sh" style="border:1px solid #E6DFCF;padding:14px">
+    <div class="row gap12"><div class="ibox" style="width:48px;height:48px;border-radius:14px;background:var(--red-bg)"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#C2412D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M12 4 2.8 19.5h18.4z"/><path d="M12 10v4.5"/><circle cx="12" cy="17" r=".5"/></svg></div><div style="flex:1"><div class="b" style="font-size:18px">الحافلة متأخرة 20 دقيقة</div><div class="row gap6" style="margin-top:4px"><span class="lchip" style="background:#0F8A7E"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="5" y="4" width="14" height="13" rx="2.5"/><path d="M5 11h14"/><path d="M8 17v2.5M16 17v2.5"/><circle cx="8.5" cy="14" r=".6"/><circle cx="15.5" cy="14" r=".6"/></svg>خط 9</span><span class="t11 t-mute">بسبب ازدحام طريق العليا</span></div></div></div>
+    <div style="margin-top:12px;background:#FAF7F1;border-radius:12px;padding:10px 12px">
+      <div class="row between t11"><span class="row gap6"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D7262E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="6" y="3.5" width="12" height="14" rx="3"/><path d="M6 10h12"/><path d="M9 21l1.5-3.5M15 21l-1.5-3.5"/><circle cx="9.5" cy="14" r=".6"/><circle cx="14.5" cy="14" r=".6"/></svg> المترو المخطط <b class="ltr">07:20</b></span><span class="row gap6"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C2412D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="5" y="4" width="14" height="13" rx="2.5"/><path d="M5 11h14"/><path d="M8 17v2.5M16 17v2.5"/><circle cx="8.5" cy="14" r=".6"/><circle cx="15.5" cy="14" r=".6"/></svg> وصولك للمحطة <b class="ltr">07:37</b></span></div>
+      <div style="position:relative;height:16px;margin-top:8px"><div style="position:absolute;top:7px;left:0;right:0;height:2px;background:#E2DBCB"></div><div style="position:absolute;top:2px;right:22%;width:12px;height:12px;border-radius:50%;background:#D7262E"></div><div style="position:absolute;top:7px;right:calc(22% + 12px);width:52%;height:2px;background:repeating-linear-gradient(90deg,#C2412D 0 5px,transparent 5px 9px)"></div><div style="position:absolute;top:2px;right:74%;width:12px;height:12px;border-radius:50%;background:#C2412D"></div></div>
+      <div class="t11 b" style="color:var(--red);text-align:center;margin-top:4px">ستفوتك رحلة المترو المخططة بـ 17 دقيقة</div>
+    </div>
+    <div class="row gap8" style="margin-top:10px"><div class="stat" style="background:var(--beige2);padding:9px 4px"><div class="k" style="margin:0 0 3px">الوصول المخطط</div><div class="v ltr" style="font-size:18px">07:35</div></div><div class="stat" style="background:var(--red-bg);padding:9px 4px"><div class="k" style="margin:0 0 3px">إن انتظرت الحافلة</div><div class="v ltr" style="font-size:18px;color:var(--red)">07:55</div></div></div>
+    <div class="row gap10" style="margin-top:10px;background:var(--mint);border-radius:12px;padding:10px 12px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2C5A47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg><div class="t12" style="color:var(--mint-t)"><b>وجدنا 3 بدائل من موقعك</b> · أسرعها يوصلك <b class="ltr">07:43</b></div></div>
+    <div style="margin-top:10px"><div class="btn " style="height:52px;font-size:15.5px;border-radius:16px;;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M14.5 6l-6 6 6 6"/></svg>اعرض البدائل</div></div>
+    <div class="t12 b" style="text-align:center;margin-top:10px;color:var(--mute)">سأنتظر الحافلة</div>
+  </div>
+</div></div><div class="home-ind"></div></section><section class="screen long" data-id="08" aria-label="طريق أسرع"><div class="scroll"><div class="island"></div><div class="status"><span>9:41</span><span class="icons">
+<svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#111"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="#111"/><rect x="10" y="3" width="3" height="9" rx="1" fill="#111"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#111"/></svg>
+<svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.5 5.6 8.6a3.6 3.6 0 0 1 4.8 0z" fill="#111"/><path d="M3.4 6.4a6.8 6.8 0 0 1 9.2 0" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M1 3.8a10.6 10.6 0 0 1 14 0" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+<svg width="26" height="12" viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" opacity=".45"/><rect x="2.2" y="2.2" width="18.6" height="7.6" rx="2" fill="#111"/><rect x="23.8" y="4" width="1.8" height="4" rx=".8" fill="#111" opacity=".45"/></svg>
+</span></div><div class="row between" style="padding:4px 20px 12px"><div class="row gap12"><div class="iconbtn" style="box-shadow:0 2px 8px rgba(0,0,0,.08)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M9.5 6l6 6-6 6"/></svg></div><div><div class="h1" style="font-size:21px">وجدنا لك طريقًا أسرع</div><div class="t12 t-mute" style="margin-top:3px">محسوب من موقعك الحالي · <span class="ltr">07:06</span></div></div></div></div>
+<div class="content">
+  <div class="hero">
+    <div class="row between" style="position:relative;z-index:1"><span style="background:#C9A86C;color:#1A3D30;border-radius:999px;padding:4px 10px" class="t11 b"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#1A3D30" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M12 3.8l2.5 5.2 5.7.7-4.2 3.9 1.1 5.6L12 16.4l-5.1 2.8L8 13.6 3.8 9.7l5.7-.7z"/></svg> الأسرع</span><span class="t11" style="opacity:.8">يصلك السائق خلال 4 دقائق</span></div>
+    <div class="row between" style="margin-top:8px;align-items:flex-end;position:relative;z-index:1">
+      <div><div class="t11" style="opacity:.7">ستصل الساعة</div><div class="b ltr gold" style="font-size:36px;line-height:1.1">07:43</div></div>
+      <div style="text-align:left"><div class="t11" style="opacity:.7">بدلًا من</div><div class="b ltr" style="font-size:17px;text-decoration:line-through;opacity:.7">07:55</div></div>
+    </div>
+    <div class="row gap6" style="margin-top:10px;position:relative;z-index:1"><span class="lchip" style="background:#3D4B57"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M4 16v-3.5L6 7.5h12l2 5V16"/><path d="M3.5 16h17v2.5h-17z"/><circle cx="7.5" cy="16" r="1.6"/><circle cx="16.5" cy="16" r="1.6"/><path d="M4.5 12.5h15"/></svg>سيارة مباشرة · 31 د</span><span style="background:rgba(127,224,168,.18);color:#7FE0A8;border-radius:7px;padding:3px 8px" class="t11 b">توفّر 12 دقيقة</span></div>
+    <div class="t12" style="margin-top:8px;opacity:.85;position:relative;z-index:1">أسرع لأنها تتجه مباشرة دون التوقف في أي محطة.</div>
+    <div style="margin-top:12px;position:relative;z-index:1"><div class="btn " style="height:48px;font-size:15.5px;border-radius:16px;background:linear-gradient(90deg,#C9A86C,#B8924E);color:#1A3D30;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v5.5H4.5V6H10"/></svg>اطلب سيارة</div></div>
+    <div class="row gap6" style="margin-top:10px;justify-content:center;position:relative;z-index:1"><span class="t11" style="opacity:.7">مثل:</span><span style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:5px 11px" class="t11 b">أوبر</span><span style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:5px 11px" class="t11 b">كريم</span><span style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:5px 11px" class="t11 b">جيني</span><span style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:5px 11px" class="t11 b">وغيرها</span></div><div class="t11" style="text-align:center;margin-top:7px;opacity:.7;position:relative;z-index:1">تختار التطبيق، ويفتح جاهزًا بوجهتك · نحو 32 ر.س</div>
+  </div>
+  <div class="b t14" style="margin-top:14px">بدائل أخرى</div>
+  <div class="sh" style="margin-top:8px;padding:11px 13px"><div class="row" style="gap:12px;align-items:flex-start"><div style="flex:1"><div class="row gap6"><div class="b t13">أقرب محطة مترو</div></div><div style="margin-top:6px"><div class="row gap6" style="flex-wrap:wrap"><span class="lchip" style="background:#8C8C86"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="13" cy="4.5" r="1.8"/><path d="M10 21l2-6 3 3v3"/><path d="M8 11l3-3 3 2 2 3"/><path d="M12 15l-1-6"/></svg>4 د</span><span class="lchip" style="background:#0B6FC6"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="6" y="3.5" width="12" height="14" rx="3"/><path d="M6 10h12"/><path d="M9 21l1.5-3.5M15 21l-1.5-3.5"/><circle cx="9.5" cy="14" r=".6"/><circle cx="14.5" cy="14" r=".6"/></svg>مترو · المسار الأزرق</span><span class="lchip" style="background:#D7262E"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="6" y="3.5" width="12" height="14" rx="3"/><path d="M6 10h12"/><path d="M9 21l1.5-3.5M15 21l-1.5-3.5"/><circle cx="9.5" cy="14" r=".6"/><circle cx="14.5" cy="14" r=".6"/></svg>مترو · المسار الأحمر</span></div></div><div class="why2" style="margin-top:5px"><b style="color:var(--gold-d)">لماذا أبطأ؟</b> المسار الأزرق مزدحم الآن، وقد لا تلحق بأول قطار، وفيه تحويل في STC.</div><div style="margin-top:6px"><span class="crowd" style="color:#C2412D"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#C2412D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1-3.6 4-5.5 7-5.5s6 1.9 7 5.5"/></svg><span class="cbar"><i style="background:#C2412D"></i><i style="background:#C2412D"></i><i style="background:#C2412D"></i><i style="background:#C2412D"></i><i style="background:#C2412D"></i></span>مزدحم جدًا</span></div></div><div style="text-align:left;flex:none"><div class="b ltr t15">07:50</div><div class="s10 t-mute">الوصول</div><div class="t12 b" style="margin-top:6px">بلا تكلفة إضافية</div></div></div></div>
+  <div class="sh" style="margin-top:8px;padding:11px 13px"><div class="row" style="gap:12px;align-items:flex-start"><div style="flex:1"><div class="row gap6"><div class="b t13">حافلة خط 7</div><span class="badge green">الأوفر</span></div><div style="margin-top:6px"><div class="row gap6" style="flex-wrap:wrap"><span class="lchip" style="background:#0F8A7E"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="5" y="4" width="14" height="13" rx="2.5"/><path d="M5 11h14"/><path d="M8 17v2.5M16 17v2.5"/><circle cx="8.5" cy="14" r=".6"/><circle cx="15.5" cy="14" r=".6"/></svg>خط 7</span><span class="lchip" style="background:#D7262E"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="6" y="3.5" width="12" height="14" rx="3"/><path d="M6 10h12"/><path d="M9 21l1.5-3.5M15 21l-1.5-3.5"/><circle cx="9.5" cy="14" r=".6"/><circle cx="14.5" cy="14" r=".6"/></svg>مترو · المسار الأحمر</span></div></div><div class="why2" style="margin-top:5px"><b style="color:var(--gold-d)">لماذا أبطأ؟</b> تتوقف في 6 مواقف قبل الوصول إلى المحطة.</div><div class="row" style="gap:0;margin-top:6px;direction:rtl"><div style="flex:1;display:flex;align-items:center"><div style="width:7px;height:7px;border-radius:50%;background:#0F8A7E"></div><div style="flex:1;height:2px;background:#0F8A7E;opacity:.45"></div></div><div style="flex:1;display:flex;align-items:center"><div style="width:7px;height:7px;border-radius:50%;background:#0F8A7E"></div><div style="flex:1;height:2px;background:#0F8A7E;opacity:.45"></div></div><div style="flex:1;display:flex;align-items:center"><div style="width:7px;height:7px;border-radius:50%;background:#0F8A7E"></div><div style="flex:1;height:2px;background:#0F8A7E;opacity:.45"></div></div><div style="flex:1;display:flex;align-items:center"><div style="width:7px;height:7px;border-radius:50%;background:#0F8A7E"></div><div style="flex:1;height:2px;background:#0F8A7E;opacity:.45"></div></div><div style="flex:1;display:flex;align-items:center"><div style="width:7px;height:7px;border-radius:50%;background:#0F8A7E"></div><div style="flex:1;height:2px;background:#0F8A7E;opacity:.45"></div></div><div style="flex:1;display:flex;align-items:center"><div style="width:7px;height:7px;border-radius:50%;background:#0F8A7E"></div><div style="flex:1;height:2px;background:#0F8A7E;opacity:.45"></div></div><div style="width:9px;height:9px;border-radius:50%;background:#D7262E"></div></div></div><div style="text-align:left;flex:none"><div class="b ltr t15">07:52</div><div class="s10 t-mute">الوصول</div><div class="t12 b" style="margin-top:6px">بلا تكلفة إضافية</div></div></div></div>
+  <div class="row between" style="margin-top:8px;padding:9px 13px;border-radius:14px;border:1px dashed #D6CFBF"><div class="t12"><b>انتظار الحافلة المتأخرة</b> <span class="t-mute">· الوصول</span> <b class="ltr" style="color:var(--red)">07:55</b></div></div>
+</div></div><div class="home-ind"></div></section><section class="screen long" data-id="09" aria-label="وصلت"><div class="scroll"><div class="island"></div><div class="status"><span>9:41</span><span class="icons">
+<svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#111"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="#111"/><rect x="10" y="3" width="3" height="9" rx="1" fill="#111"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#111"/></svg>
+<svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.5 5.6 8.6a3.6 3.6 0 0 1 4.8 0z" fill="#111"/><path d="M3.4 6.4a6.8 6.8 0 0 1 9.2 0" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M1 3.8a10.6 10.6 0 0 1 14 0" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+<svg width="26" height="12" viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" opacity=".45"/><rect x="2.2" y="2.2" width="18.6" height="7.6" rx="2" fill="#111"/><rect x="23.8" y="4" width="1.8" height="4" rx=".8" fill="#111" opacity=".45"/></svg>
+</span></div><div class="content" style="padding-top:10px">
+  <div class="hero" style="text-align:center;padding:22px 18px">
+    <div style="position:relative;z-index:1;width:76px;height:76px;border-radius:50%;background:rgba(255,255,255,.14);margin:0 auto;display:flex;align-items:center;justify-content:center"><div style="width:56px;height:56px;border-radius:50%;background:#C9A86C;display:flex;align-items:center;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1A3D30" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div></div>
+    <div class="b" style="font-size:28px;margin-top:6px;position:relative;z-index:1">وصلت!</div>
+    <div class="t13" style="opacity:.8;position:relative;z-index:1">جامعة الملك سعود · البوابة الرئيسية</div>
+    <div class="b ltr gold" style="font-size:40px;position:relative;z-index:1">07:43</div></div>
+  <div class="row gap12" style="margin-top:12px;background:var(--mint);border-radius:18px;padding:14px 16px"><div class="ibox" style="background:#fff;width:40px;height:40px;border-radius:50%"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#2C5A47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></div><div><div class="b" style="font-size:16px;color:var(--mint-t)">وفّر لك مِهاد 12 دقيقة</div><div class="t12" style="color:var(--mint-t)">لو انتظرت الحافلة المتأخرة كنت بتوصل <span class="ltr">07:55</span></div></div></div>
+  <div class="sh" style="margin-top:12px;padding:13px 15px"><b class="t14">ملخص رحلتك</b>
+    <div class="row gap10" style="margin-top:9px"><span style="width:10px;height:10px;border-radius:50%;background:#8C8C86;flex:none"></span><span class="t12" style="flex:1">انطلقت مشيًا إلى موقف الحافلة</span><b class="t12 ltr t-mute">07:00</b></div><div class="row gap10" style="margin-top:9px"><span style="width:10px;height:10px;border-radius:50%;background:#C2412D;flex:none"></span><span class="t12" style="flex:1">نبّهك مِهاد: الحافلة متأخرة 20 دقيقة</span><b class="t12 ltr t-mute">07:05</b></div><div class="row gap10" style="margin-top:9px"><span style="width:10px;height:10px;border-radius:50%;background:#3D4B57;flex:none"></span><span class="t12" style="flex:1">اخترت سيارة مباشرة من موقعك</span><b class="t12 ltr t-mute">07:06</b></div><div class="row gap10" style="margin-top:9px"><span style="width:10px;height:10px;border-radius:50%;background:#2E8B57;flex:none"></span><span class="t12" style="flex:1">وصلت إلى الجامعة</span><b class="t12 ltr t-mute">07:43</b></div></div>
+  <div class="row gap8" style="margin-top:12px"><div style="flex:1;text-align:center;background:#fff;border-radius:14px;padding:10px 4px;box-shadow:0 4px 18px rgba(40,40,20,.07)"><div class="b t14">43 د</div><div class="t11 t-mute">مدة الرحلة</div></div><div style="flex:1;text-align:center;background:#fff;border-radius:14px;padding:10px 4px;box-shadow:0 4px 18px rgba(40,40,20,.07)"><div class="b t14">نحو 32 ر.س</div><div class="t11 t-mute">التكلفة</div></div><div style="flex:1;text-align:center;background:#fff;border-radius:14px;padding:10px 4px;box-shadow:0 4px 18px rgba(40,40,20,.07)"><div class="b t14">1</div><div class="t11 t-mute">تنبيه استباقي</div></div></div>
+  <div class="sh" style="margin-top:12px;text-align:center;padding:12px 15px"><div class="b t13">كيف كانت رحلتك مع مِهاد؟</div><div class="row gap8" style="justify-content:center;margin-top:8px;direction:ltr"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#D6CFBF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M12 3.8l2.5 5.2 5.7.7-4.2 3.9 1.1 5.6L12 16.4l-5.1 2.8L8 13.6 3.8 9.7l5.7-.7z"/></svg><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C9A86C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M12 3.8l2.5 5.2 5.7.7-4.2 3.9 1.1 5.6L12 16.4l-5.1 2.8L8 13.6 3.8 9.7l5.7-.7z"/></svg><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C9A86C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M12 3.8l2.5 5.2 5.7.7-4.2 3.9 1.1 5.6L12 16.4l-5.1 2.8L8 13.6 3.8 9.7l5.7-.7z"/></svg><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C9A86C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M12 3.8l2.5 5.2 5.7.7-4.2 3.9 1.1 5.6L12 16.4l-5.1 2.8L8 13.6 3.8 9.7l5.7-.7z"/></svg><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C9A86C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M12 3.8l2.5 5.2 5.7.7-4.2 3.9 1.1 5.6L12 16.4l-5.1 2.8L8 13.6 3.8 9.7l5.7-.7z"/></svg></div></div>
+</div>
+<div style="position:absolute;bottom:0;left:0;right:0;padding:12px 18px 28px;background:linear-gradient(rgba(245,240,230,0),var(--ivory) 25%);z-index:9"><div class="row gap8"><div style="flex:1"><div class="btn " style="height:52px;font-size:15.5px;border-radius:16px;;">تم</div></div><div class="btn soft" style="flex:1;height:52px;border-radius:16px;font-size:14px">شارك وقت وصولي</div></div></div></div><div class="home-ind"></div></section></div></div>
+</div>
+<div class="toast" id="toast"></div>
+<script>window.MIHAD_OPTIONS={"A": "حافلة خط 9 ثم المترو عبر المسار الأحمر من محطة التخصصي، الوصول 07:35، 35 دقيقة، 4 ريالات، المسار شبه فارغ وبلا تحويل", "B": "سيارة إلى محطة التخصصي ثم المترو عبر المسار الأحمر، الوصول 07:30، 30 دقيقة، 15 ريالًا", "C": "أقرب محطة مترو: المسار الأزرق ثم الأحمر، الوصول 07:43، مزدحم 95% وفيه تحويل في STC، 4 ريالات", "E": "حافلة فقط (خط 7 ثم 12)، الوصول 07:58، 58 دقيقة، 4 ريالات", "D": "سيارة فقط، الوصول 07:45، 38 ريالًا"};</script>
+<script>/* مِهاد — منطق الموقع التفاعلي */
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const stage = $('.stage');
+  const S = id => $(`#phone .screen[data-id="${id}"]`);
+  const OPTS = window.MIHAD_OPTIONS || {};
+
+  /* ---------- أدوات عامة ---------- */
+  const norm = s => (s || '').replace(/\s+/g, ' ').trim();
+  function findText(root, text) {
+    if (!root) return null;
+    let best = null;
+    const els = $$('*', root).filter(el => !el.closest('svg'));
+    for (const el of els) if (norm(el.textContent) === text && (!best || best.contains(el))) best = el;
+    if (best) return best;
+    for (const el of els) if (norm(el.textContent).includes(text) && (!best || best.contains(el))) best = el;
+    return best;
+  }
+  function onText(root, text, fn, climb) {
+    const el = findText(root, text);
+    if (!el) { console.warn('[mihad] لم أجد:', text); return null; }
+    const t = (climb && el.closest(climb)) || el.closest('.btn') || el;
+    t.classList.add('click');
+    t.addEventListener('click', e => { e.stopPropagation(); fn(e, t); });
+    return t;
+  }
+  let toastT;
+  function toast(msg, ms = 2600) {
+    const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+    clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), ms);
+  }
+  const mins = n => (n >= 3 && n <= 10) ? `${n} دقائق` : `${n} دقيقة`;
+
+  /* ---------- الأشرطة السفلية تبقى ثابتة أثناء التمرير ---------- */
+  $$('.screen').forEach(sec => {
+    const sc = $('.scroll', sec);
+    [...sc.children].forEach(ch => {
+      if (ch.style && ch.style.position === 'absolute' && ch.style.bottom === '0px' && !ch.style.top) sec.appendChild(ch);
+    });
+  });
+
+  /* ---------- التنقل ---------- */
+  let cur = null; const hist = []; let timers = [];
+  const clearTimers = () => { timers.forEach(clearTimeout); timers = []; };
+  const later = (fn, ms) => timers.push(setTimeout(fn, ms));
+  const onEnter = {};
+  function go(id, { back = false, push = true } = {}) {
+    const next = S(id); if (!next || id === cur) return;
+    clearTimers();
+    if (cur) {
+      const prev = S(cur);
+      prev.classList.remove('active', 'exit-fwd', 'exit-back');
+      prev.classList.add(back ? 'exit-back' : 'exit-fwd');
+      setTimeout(() => prev.classList.remove('exit-fwd', 'exit-back'), 480);
+      if (push && !back) hist.push(cur);
+    }
+    next.classList.remove('exit-fwd', 'exit-back');
+    next.classList.toggle('back', back);
+    $('.scroll', next).scrollTop = 0;
+    void next.offsetWidth;
+    requestAnimationFrame(() => next.classList.add('active'));
+    cur = id;
+    $$('.navbtn').forEach(b => b.classList.toggle('on', b.dataset.go === id));
+    onEnter[id] && onEnter[id]();
+  }
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function riseIn(sec) {
+    if (reduced) return;
+    const c = $('.scroll > .content', sec); if (!c) return;
+    [...c.children].forEach((k, i) => {
+      k.style.animation = 'none'; void k.offsetWidth;
+      k.style.animation = `rise .5s cubic-bezier(.22,.8,.24,1) ${80 + Math.min(i, 8) * 60}ms both`;
+    });
+  }
+  function goBack() { const p = hist.pop(); go(p || '01', { back: true, push: false }); }
+  function reset() { hist.length = 0; waited = false; go('01', { back: true, push: false }); }
+
+  // أزرار الرجوع في رأس كل شاشة
+  $$('#phone .screen').forEach(sec => {
+    if (sec.dataset.id === '01') return;
+    // كل أيقونة سهم رجوع (في الرأس أو فوق الخريطة)
+    $$('svg path[d^="M9.5 6l6 6"]', sec).forEach(p => {
+      const b = p.closest('.iconbtn') || p.closest('svg').parentElement;
+      if (b && !b.classList.contains('click') && !b.closest('.btn')) { b.classList.add('click'); b.addEventListener('click', e => { e.stopPropagation(); goBack(); }); }
+    });
+  });
+
+  /* ---------- الذكاء الاصطناعي ---------- */
+  const AI = {
+    remote: location.protocol.startsWith('http'),
+    history: [],
+    async call(payload) {
+      const ctl = new AbortController(); const to = setTimeout(() => ctl.abort(), 9000);
+      try {
+        const r = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: ctl.signal });
+        if (!r.ok) throw new Error('http ' + r.status);
+        const j = await r.json(); if (j.error) throw new Error(j.error); return j;
+      } finally { clearTimeout(to); }
+    },
+    async parse(text) {
+      if (this.remote) {
+        try { const j = await this.call({ mode: 'parse', text }); if (j.result) return { ...localParse(text), ...j.result, source: 'ai' }; } catch (e) { /* الوضع الاحتياطي */ }
+      }
+      return localParse(text);
+    },
+    async chat(text) {
+      let reply = null;
+      if (this.remote) {
+        try { const j = await this.call({ mode: 'chat', text, history: this.history.slice(-8) }); reply = j.reply; } catch (e) { /* الوضع الاحتياطي */ }
+      }
+      if (!reply) reply = localReply(text);
+      this.history.push({ role: 'user', content: text }, { role: 'assistant', content: reply });
+      return reply;
+    }
+  };
+
+  const AR_DIGITS = '٠١٢٣٤٥٦٧٨٩';
+  const toLatin = s => s.replace(/[٠-٩]/g, d => AR_DIGITS.indexOf(d));
+  const HOURS = { 'السادسة': 6, 'السابعة': 7, 'الثامنة': 8, 'التاسعة': 9, 'العاشرة': 10, 'الحادية عشرة': 11, 'الثانية عشرة': 12 };
+  function parseTime(t) {
+    t = toLatin(t);
+    let m = t.match(/(\d{1,2})[:٫.](\d{2})/);
+    if (m) return `${String(+m[1]).padStart(2, '0')}:${m[2]}`;
+    for (const [w, h] of Object.entries(HOURS)) {
+      if (t.includes(w)) {
+        let mm = '00';
+        if (/والنصف|ونص/.test(t)) mm = '30'; else if (/والربع|وربع/.test(t)) mm = '15'; else if (/إلا ربع|الا ربع/.test(t)) return `${String(h - 1).padStart(2, '0')}:45`;
+        return `${String(h).padStart(2, '0')}:${mm}`;
+      }
+    }
+    m = t.match(/(?:قبل|الساعة|الساعه)\s*(\d{1,2})(?!\d)/);
+    if (m) return `${String(+m[1]).padStart(2, '0')}:00`;
+    return null;
+  }
+  function localParse(text) {
+    const t = text || '';
+    let destination = 'جامعة الملك سعود';
+    if (!/جامع|الجامعة/.test(t)) { const m = t.match(/(?:إلى|الى|لـ|ل)\s*([^\s،,.]+(?:\s[^\s،,.]+)?)/); if (m) destination = m[1]; }
+    const arrive_before = parseTime(t);
+    let priority = 'balanced';
+    if (/زحام|زحمة|ازدحام|هادئ|فاضي|فارغ/.test(t)) priority = 'crowd';
+    else if (/أسرع|اسرع|بسرعة|مستعجل|عجلة|متأخر/.test(t)) priority = 'fast';
+    else if (/أرخص|ارخص|رخيص|أوفر|اوفر|تكلفة|ميزانية|ريال/.test(t)) priority = 'cheap';
+    let recommended = priority === 'fast' ? 'B' : 'A';
+    let note = {
+      crowd: 'استبعدتُ المسار الأزرق في المترو لأنه مزدحم الآن',
+      fast: 'السيارة إلى المسار الأحمر توصلك أبكر بخمس دقائق',
+      cheap: 'الخيار A بـ 4 ر.س فقط، والمسار الأحمر شبه فارغ',
+      balanced: 'الخيار A يجمع بين التكلفة المنخفضة وقلة الزحام'
+    }[priority];
+    if (arrive_before && arrive_before < '07:35') {
+      recommended = 'B';
+      note = arrive_before < '07:30' ? `لا يوجد خيار يصل قبل ${arrive_before}، وأقربها B (07:30)` : `الخيار B وحده يصل قبل ${arrive_before}`;
+    }
+    const prefTxt = { crowd: 'دون زحام', fast: 'بأسرع طريق', cheap: 'بأقل تكلفة', balanced: '' }[priority];
+    const understood = [destination.replace('جامعة الملك سعود', 'الجامعة'), arrive_before ? `قبل ${arrive_before}` : '', prefTxt].filter(Boolean).join('، ');
+    return { destination, arrive_before, priority, recommended, note, understood, source: 'local' };
+  }
+  function localReply(q) {
+    const t = q || '';
+    if (/تأخر|تاخر|تأخير|متأخر/.test(t)) return 'لا تقلق، أتابع رحلتك لحظيًا، وإذا تأخرت الحافلة أنبّهك فورًا وأقترح عليك بديلًا أسرع من موقعك.';
+    if (/كم|سعر|تكلفة|ريال|غالي|رخيص/.test(t)) return 'الخيار A بـ 4 ر.س، والخيار B بـ 15 ر.س، والسيارة فقط بنحو 38 ر.س.';
+    if (/أقرب|اقرب|محطة|الأزرق|الازرق/.test(t)) return 'أقرب محطة على المسار الأزرق، لكنه مزدحم الآن بنسبة 95% وفيه تحويل في STC، فتصل 07:43 بدل 07:35.';
+    if (/زحام|زحمة|ازدحام/.test(t)) return 'المسار الأزرق مزدحم الآن، أما المسار الأحمر فشبه فارغ، لذلك أوصيك بالخيار A.';
+    if (/مترو|قطار|عرب/.test(t)) return 'ستركب المترو عبر المسار الأحمر من محطة التخصصي الساعة 07:20، والعربتان 1 و2 الأقل ازدحامًا.';
+    if (/حافلة|باص/.test(t)) return 'الحافلة خط 9 تصل إلى الموقف الساعة 07:05، وتنزل بعد 3 مواقف عند محطة التخصصي.';
+    if (/سيارة|أوبر|اوبر|كريم|جيني|تاكسي/.test(t)) return 'يمكنك طلب سيارة من التطبيق الذي تفضّله، مثل أوبر أو كريم أو جيني، ويفتح جاهزًا بوجهتك.';
+    if (/شكر|مشكور|يعطيك/.test(t)) return 'العفو، رحلة موفقة!';
+    return 'أنصحك بالخيار A: حافلة ثم المترو عبر المسار الأحمر، تصل 07:35 بـ 4 ر.س ودون زحام. هل تريد أن أعتمده لك؟';
+  }
+
+  /* ---------- 01 الرئيسية ---------- */
+  const s01 = S('01');
+  const DEFAULT_Q = 'أريد الوصول إلى الجامعة قبل الثامنة، دون زحام';
+  const ph = findText(s01, 'أريد الوصول إلى الجامعة قبل الثامنة…');
+  const aiInput = document.createElement('input');
+  aiInput.className = 'aiinput'; aiInput.placeholder = 'أريد الوصول إلى الجامعة قبل الثامنة…'; aiInput.setAttribute('aria-label', 'اسأل مِهاد');
+  ph.replaceWith(aiInput);
+  const [micBtn, sendBtn] = $$('.ibox', aiInput.parentElement);
+  [micBtn, sendBtn].forEach(b => b.classList.add('click'));
+  sendBtn.addEventListener('click', () => submit(aiInput.value.trim() || DEFAULT_Q));
+  aiInput.addEventListener('keydown', e => { if (e.key === 'Enter') submit(aiInput.value.trim() || DEFAULT_Q); });
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  micBtn.addEventListener('click', () => {
+    if (!SR) { toast('الإدخال الصوتي غير مدعوم في هذا المتصفح، جرّب Chrome'); return; }
+    const r = new SR(); r.lang = 'ar-SA'; r.interimResults = false;
+    micBtn.classList.add('mic-on'); toast('تحدّث الآن…', 1800);
+    r.onresult = e => { aiInput.value = e.results[0][0].transcript; submit(aiInput.value); };
+    r.onerror = () => toast('تعذّر التعرّف على الصوت');
+    r.onend = () => micBtn.classList.remove('mic-on');
+    r.start();
+  });
+  onText(s01, 'رحلتك المعتادة: الجامعة 07:00', () => submit('رحلتي المعتادة إلى الجامعة، أريد الوصول قبل الثامنة'), 'span');
+  onText(s01, 'تجنّب الزحام', () => submit('أريد الوصول إلى الجامعة دون زحام'), 'span');
+  onText(s01, 'ابحث عن وجهتك', () => go('03'));
+  onText(s01, 'الجامعة', () => go('03'));
+  ['المنزل', 'العمل', 'إضافة', 'حسابي'].forEach(w => onText(s01, w, () => toast('هذه الميزة غير متاحة في النسخة التجريبية')));
+  onText(s01, 'المساعد', () => go('02'));
+
+  /* ---------- 02a / 02 المساعد ---------- */
+  function userBubble(id) {
+    return $$('.content > div > div', S(id)).find(d => (d.getAttribute('style') || '').includes('linear-gradient(135deg'));
+  }
+  function setChip(span, txt) {
+    [...span.childNodes].forEach(n => { if (n.nodeType === 3) n.remove(); });
+    span.appendChild(document.createTextNode(' ' + txt));
+  }
+  const s02 = S('02');
+  const optRows = $$('.row.gap10', s02).filter(r => (r.getAttribute('style') || '').includes('border-radius:14px'));
+  const OPT_KEYS = ['A', 'B', 'D'];
+  let selected = 'A';
+  function selectOpt(key) {
+    selected = key;
+    optRows.forEach((row, i) => {
+      const on = OPT_KEYS[i] === key;
+      row.style.background = on ? '#FBF6EC' : 'var(--ivory)';
+      row.style.border = on ? '1.5px solid #C9A86C' : '1px solid transparent';
+      const radio = row.firstElementChild;
+      radio.style.borderColor = on ? '#1A3D30' : '#C9C2B2';
+      radio.innerHTML = on ? "<div style='width:9px;height:9px;border-radius:50%;background:#1A3D30'></div>" : '';
+      const time = $('.ltr', row); if (time) time.style.color = on ? 'var(--green)' : 'var(--ink)';
+    });
+  }
+  optRows.forEach((row, i) => { row.classList.add('click'); row.addEventListener('click', () => selectOpt(OPT_KEYS[i])); });
+
+  function applyResult(text, res) {
+    [userBubble('02a'), userBubble('02')].forEach(b => b && (b.textContent = text));
+    const chipsRow = findText(s02, 'فهمت طلبك:').nextElementSibling;
+    const chips = $$('.chip', chipsRow);
+    if (chips[1]) setChip(chips[1], res.destination || 'جامعة الملك سعود');
+    if (chips[2]) setChip(chips[2], res.arrive_before ? `قبل ${res.arrive_before}` : 'المغادرة الآن');
+    if (chips[3]) setChip(chips[3], { crowd: 'أقل ازدحامًا', fast: 'الأسرع', cheap: 'الأقل تكلفة', balanced: 'الأنسب لك' }[res.priority] || 'الأنسب لك');
+    const noteEl = findText(s02, 'استبعدتُ المسار الأزرق في المترو لأنه مزدحم الآن');
+    if (noteEl && res.note) { [...noteEl.childNodes].forEach(n => { if (n.nodeType === 3) n.remove(); }); noteEl.appendChild(document.createTextNode(' ' + res.note)); }
+    selectOpt(['A', 'B', 'D'].includes(res.recommended) ? res.recommended : 'A');
+  }
+  async function submit(text) {
+    if (cur === '02a') return;
+    aiInput.blur();
+    const quick = localParse(text);
+    [userBubble('02a'), userBubble('02')].forEach(b => b && (b.textContent = text));
+    const und = findText(S('02a'), 'فهمت طلبك:');
+    if (und) und.textContent = 'فهمت طلبك: ' + quick.understood;
+    go('02a');
+    const t0 = Date.now();
+    const res = await AI.parse(text);
+    setTimeout(() => { applyResult(text, res); if (cur === '02a') go('02', { push: false }); }, Math.max(0, 2300 - (Date.now() - t0)));
+  }
+
+  // خانة المحادثة في 02
+  const chatPh = findText(s02, 'اكتب رحلتك…');
+  const chatInput = document.createElement('input');
+  chatInput.className = 'chatinput'; chatInput.placeholder = 'اسأل مِهاد عن رحلتك…'; chatInput.setAttribute('aria-label', 'اكتب سؤالك');
+  chatPh.replaceWith(chatInput);
+  const chatBar = chatInput.closest('.row.gap8');
+  const chatSend = chatBar.lastElementChild; chatSend.classList.add('click');
+  chatBar.children[1].classList.add('click');
+  chatBar.children[1].addEventListener('click', () => toast('الإدخال الصوتي متاح من الشاشة الرئيسية'));
+  const content02 = $('.content', s02);
+  const botRowTpl = [...content02.children].reverse().find(r => (r.getAttribute('style') || '').includes('flex-end'));
+  const userRowTpl = userBubble('02').parentElement;
+  async function sendChat() {
+    const q = chatInput.value.trim(); if (!q) return;
+    chatInput.value = '';
+    const u = userRowTpl.cloneNode(true); u.style.animation = ''; u.classList.add('pop'); u.firstElementChild.textContent = q; content02.appendChild(u);
+    const b = botRowTpl.cloneNode(true); b.style.animation = ''; b.classList.add('pop'); const bubble = b.firstElementChild;
+    bubble.innerHTML = '<span class="typing"><span></span><span></span><span></span></span>';
+    content02.appendChild(b);
+    const sc = $('.scroll', s02); sc.scrollTo({ top: sc.scrollHeight, behavior: 'smooth' });
+    const reply = await AI.chat(q);
+    bubble.textContent = reply;
+    sc.scrollTo({ top: sc.scrollHeight, behavior: 'smooth' });
+  }
+  chatSend.addEventListener('click', sendChat);
+  chatInput.addEventListener('keydown', e => { if (e.key === 'Enter') sendChat(); });
+
+  onText(s02, 'اعتمد المحدد', () => { toast(`اعتمدتُ الخيار ${selected}، وسأتابع رحلتك لحظيًا`); go('06'); });
+  onText(s02, 'قارن بالتفصيل', () => go('03'));
+
+  /* ---------- 03 / 04 / 05 ---------- */
+  const s03 = S('03');
+  onText(s03, 'تابع بالخيار A', () => go('05'));
+  const linkC = onText(s03, 'اعرف السبب بالتفصيل ←', () => go('04'));
+  if (linkC) { const card = linkC.parentElement.closest('div[style*="border-radius:18px"]'); if (card) { card.classList.add('click'); card.addEventListener('click', () => go('04')); } }
+  const s04 = S('04');
+  onText(s04, 'تابع بالخيار A', () => go('05'));
+  onText(s04, 'رجوع إلى الخيارات', () => go('03', { back: true }));
+  onText(S('05'), 'ابدأ الرحلة', () => go('06'));
+
+  /* ---------- 06 → 06b → 07 → 08 → 09 ---------- */
+  let waited = false;
+  onEnter['06'] = () => { if (!waited && !stage.classList.contains('sim')) later(() => go('06b'), 6000); };
+  const notif = (() => { const t = findText(S('06b'), 'الحافلة متأخرة'); return t && t.closest('div[style*="border-radius"]'); })();
+  onEnter['06b'] = () => {
+    if (notif) { notif.classList.remove('drop'); void notif.offsetWidth; notif.classList.add('drop'); }
+    try { navigator.vibrate && navigator.vibrate([120, 60, 120]); } catch (e) {}
+  };
+  S('06b').classList.add('click');
+  S('06b').addEventListener('click', () => go('07'));
+  const s07 = S('07');
+  onText(s07, 'اعرض البدائل', () => go('08'));
+  onText(s07, 'سأنتظر الحافلة', () => { waited = true; toast('حسنًا، سأتابع الحافلة وأنبّهك قبل وصولها'); go('06', { back: true }); });
+  const s08 = S('08');
+  onText(s08, 'اطلب سيارة', () => { toast('يفتح التطبيق الذي تختاره (أوبر، كريم، جيني…) جاهزًا بوجهتك'); later(() => go('09'), 1700); });
+  onText(s08, 'انتظار الحافلة المتأخرة', () => { waited = true; go('06', { back: true }); });
+  const s09 = S('09');
+  onText(s09, 'تم', reset);
+  onText(s09, 'شارك وقت وصولي', async () => {
+    const text = 'وصلتُ إلى جامعة الملك سعود الساعة 07:43 مع مِهاد';
+    try { if (navigator.share) { await navigator.share({ text }); return; } await navigator.clipboard.writeText(text); toast('نُسخ وقت وصولك، ألصقه في أي محادثة'); }
+    catch (e) { toast('تعذّرت المشاركة'); }
+  });
+
+
+  /* ---------- كل عنصر قابل للضغط يسوي شي منطقي ---------- */
+  const tap = (el, fn) => { if (!el || el.classList.contains('click')) return; el.classList.add('click'); el.addEventListener('click', e => { e.stopPropagation(); fn(e, el); }); };
+  // 01
+  tap($('.iconbtn', s01), () => toast('لا توجد تنبيهات جديدة، سأخبرك فور حدوث أي تأخير في رحلتك'));
+  const swap01 = $$('.ibox', s01)[2]; tap(swap01, () => toast('اختر وجهتك أولًا، ثم يمكنك عكس الاتجاه'));
+  onText(s01, 'موقعي الحالي', () => toast('موقعك الحالي: حي النرجس'));
+  onText(s01, 'الرئيسية', () => {});
+  // رحلاتي في الشريط السفلي تفتح خطوات الرحلة
+  onText(s01, 'رحلاتي', () => go('05'), '.tab');
+  // 02: شارات «فهمت طلبك» تفتح خانة السؤال
+  $$('.chip', s02).forEach(c => tap(c, () => { chatInput.focus(); toast('اكتب ما تريد تعديله في طلبك، مثل: أريد الوصول قبل 07:30'); }));
+  // 03: البطاقات قابلة للاختيار، وزر المتابعة يتبع الاختيار
+  const cards03 = $$('div[style*="border-radius:18px"]', s03).filter(c => /^[ABCDE]$/.test(norm(($$('div', c).find(d => /^[ABCDE]$/.test(norm(d.textContent))) || {}).textContent)));
+  const cont03 = findText(s03, 'تابع بالخيار A');
+  let pick03 = 'A';
+  function select03(card, key) {
+    pick03 = key;
+    cards03.forEach(c => {
+      const on = c === card;
+      c.style.boxShadow = on ? '0 0 0 2px #C9A86C' : '';
+      const radio = $$('div', c).find(d => (d.getAttribute('style') || '').includes('border-radius:50%') && (d.getAttribute('style') || '').includes('width:20px'));
+      if (radio) { radio.style.borderColor = on ? '#1A3D30' : '#C9C2B2'; radio.innerHTML = on ? "<div style='width:10px;height:10px;border-radius:50%;background:#1A3D30'></div>" : ''; }
+    });
+    if (cont03) { const tn = [...cont03.childNodes].reverse().find(n => n.nodeType === 3 && n.textContent.trim()); if (tn) tn.textContent = ` تابع بالخيار ${key}`; else cont03.textContent = `تابع بالخيار ${key}`; }
+  }
+  cards03.forEach(c => {
+    const key = norm(($$('div', c).find(d => /^[ABCDE]$/.test(norm(d.textContent))) || {}).textContent);
+    if (key === 'C') return; // C يفتح الشرح
+    tap(c, () => { select03(c, key); if (key !== 'A') toast(`اخترت الخيار ${key}. في هذا العرض نتابع رحلة الخيار A الموصى به`); });
+  });
+  const swap03 = $('.ibox', s03); tap(swap03, () => toast('عكس الاتجاه متاح في النسخة الكاملة'));
+  onText(s03, 'المغادرة الآن', () => toast('يمكنك تحديد وقت مغادرة لاحق في النسخة الكاملة'), 'span');
+  // 04: بطاقة الخلاصة والبطاقتان
+  tap(findText(s04, 'الخيار A يوصلك أبكر بـ 8 دقائق') && findText(s04, 'الخيار A يوصلك أبكر بـ 8 دقائق').closest('div[style*="border-radius"]'), () => go('05'));
+  // 05: مشاركة + شارة الربط
+  const s05 = S('05');
+  $$('svg', s05).forEach(svg => { const par = svg.parentElement; if (par && !par.classList.contains('click') && (par.getAttribute('style') || '').includes('border-radius:50%') && !svg.querySelector('path[d^="M9.5 6l6 6"]')) tap(par, () => shareText('رحلتي اليوم مع مِهاد: حافلة خط 9 ثم المترو عبر المسار الأحمر، الوصول 07:35')); });
+  onText(s05, 'الربط مضمون', () => toast('الحافلة تصل التخصصي 07:17 والقطار 07:20، فالربط مضمون بثلاث دقائق'), 'span');
+  // 06: البطاقات
+  const s06 = S('06');
+  onText(s06, 'باقي رحلتك', () => go('05'), 'div[style*="border-radius"]');
+  onText(s06, 'امشِ إلى الموقف', () => toast('متبقٍ 200 م، انعطف يمينًا عند الإشارة'), 'div[style*="border-radius"]');
+  onText(s06, 'تصل الموقف 07:05', () => toast('الحافلة خط 9 على بُعد محطتين من الموقف'), 'div[style*="border-radius"]');
+  onText(s06, 'من التخصصي', () => toast('العربتان 1 و2 الأقل ازدحامًا في القطار القادم'), 'div[style*="border-radius"]');
+  // 07: بطاقة التنبيه
+  onText(s07, 'بسبب ازدحام', () => go('08'), 'div[style*="border-radius"]');
+  // 08: تطبيقات النقل وبدائل
+  ['أوبر', 'كريم', 'جيني', 'وغيرها'].forEach(w => onText(s08, w, () => { toast(w === 'وغيرها' ? 'اختر أي تطبيق نقل تفضّله' : `يفتح ${w} جاهزًا بوجهتك`); if (w !== 'وغيرها') later(() => go('09'), 1500); }, 'span'));
+  onText(s08, 'أقرب محطة مترو', () => go('04'), 'div[style*="border-radius"]');
+  onText(s08, 'حافلة خط 7', () => toast('الحافلة خط 7 تتوقف في 6 مواقف، فتصل 07:52'), 'div[style*="border-radius"]');
+  // 09: التقييم بالنجوم + بطاقة التوفير
+  const starsRow = findText(s09, 'كيف كانت رحلتك مع مِهاد؟');
+  if (starsRow) {
+    const box = starsRow.closest('div[style*="border-radius"]') || starsRow.parentElement;
+    const stars = $$('svg', box);
+    stars.forEach((st, i) => { st.parentElement.classList.add('stars'); tap(st, () => { stars.forEach((x, j) => { $$('*', x).forEach(n => { n.setAttribute('fill', j <= i ? '#C9A86C' : 'none'); n.setAttribute('stroke', j <= i ? '#C9A86C' : (n.getAttribute('stroke') || 'currentColor')); }); }); toast('شكرًا لتقييمك!'); }); });
+  }
+  tap($('.ibox', s09), () => toast('لو انتظرت الحافلة المتأخرة لوصلت 07:55 بدل 07:43'));
+  async function shareText(text) {
+    try { if (navigator.share) { await navigator.share({ text }); return; } await navigator.clipboard.writeText(text); toast('نُسخ النص، ألصقه في أي محادثة'); }
+    catch (e) { toast('تعذّرت المشاركة'); }
+  }
+
+  /* ---------- مقاس الجوال حسب الشاشة ---------- */
+  function fit() {
+    const mobile = innerWidth <= 760;
+    $$('.device').forEach(dev => {
+      const fr = $('.frame', dev);
+      if (mobile) {
+        const s = innerWidth / 402;
+        fr.style.transform = `scale(${s})`; fr.style.transformOrigin = '0 0';
+        fr.style.height = (innerHeight / s) + 'px';
+        dev.style.width = ''; dev.style.height = '';
+      } else {
+        const s = Math.min(1, (innerHeight - 64) / 874);
+        fr.style.transform = `scale(${s})`; fr.style.transformOrigin = '0 0'; fr.style.height = '874px';
+        dev.style.width = (402 * s) + 'px'; dev.style.height = (874 * s) + 'px';
+      }
+    });
+  }
+  addEventListener('resize', fit); fit();
+
+  /* ---------- البداية ---------- */
+  window.__mihadGo = go;
+  if (location.hash) history.replaceState(null, '', location.pathname);
+  go('01', { push: false });
+})();
+</script>
+</body>
+</html>
